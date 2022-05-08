@@ -30,6 +30,16 @@ const Header = () => {
     ''
   )
 
+  const userList = user ? (
+    <Link href="/Userlist">
+      <a>User List</a>
+    </Link>
+  ) : (
+    <Link href="/SignIn">
+      <a>User List</a>
+    </Link>
+  )
+
   /*====================Design Object=========================*/
   const design = {
     headerStyle:
@@ -63,8 +73,8 @@ const Header = () => {
       <nav></nav>
       <nav className={design.headerRightNavStyle}>
         <ul className={design.headerRightNavLinkStyle}>
+          <li>{userList}</li>
           <li>{profileButton}</li>
-
           <li>{loginButton}</li>
           <li>{settingsButton}</li>
         </ul>
