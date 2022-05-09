@@ -92,7 +92,7 @@ const Profile = ({ userData }) => {
   return (
     <ProtectedRoute>
       {/* ==========================Mobile Profile================================ */}
-      <div className="bg-neutral-700">
+      <div className="block bg-neutral-700 md:hidden">
         <div className="flex min-h-screen flex-col items-center ">
           <article className="flex  flex-col items-center rounded-xl p-2 text-center">
             <div className="sticky top-0">
