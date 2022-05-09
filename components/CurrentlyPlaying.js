@@ -1,10 +1,15 @@
 import { updateDoc, doc, onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { useState, useEffect } from 'react'
+import { AuthFunctions } from '../src/AuthContext'
 const CurrentlyPlaying = ({ userData }) => {
   const [mode, setMode] = useState('')
   const [tier, setTier] = useState('')
   const [champ, setChamp] = useState('')
+  const { user } = AuthFunctions()
+
+  const profileOwner =
+    user.displayName === userData.displayName ? 'block' : 'hidden'
   const updateChamp = async (e) => {
     const userRef = doc(db, 'users', userData.displayName)
     await updateDoc(userRef, {
@@ -33,7 +38,7 @@ const CurrentlyPlaying = ({ userData }) => {
   }, [])
 
   return (
-    <div className="mt-10 flex w-full flex-col gap-4 text-xs">
+    <div className={`mt-10 flex w-full flex-col gap-4 text-xs ${profileOwner}`}>
       <span className="text-white">I am currently Playing:</span>
       <span className="text-xl font-medium text-white">{champ} </span>
       <select
