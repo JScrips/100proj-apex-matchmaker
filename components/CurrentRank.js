@@ -40,7 +40,7 @@ const CurrentRank = ({ userData }) => {
           {rank} {tier}
         </span>
       </div>
-      <div className="flex gap-2 text-[10px]">
+      <div className="flex gap-2 text-base">
         Rank:
         <div className="flex gap-2">
           <select

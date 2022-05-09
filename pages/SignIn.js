@@ -19,9 +19,10 @@ const SignIn = () => {
     try {
       const userRef = collection(db, 'users')
       const userQuery = query(userRef, where('email', '==', email))
-      const user = await getDocs(userQuery)
-      const endPoint = user.docs[0].id
+      const person = await getDocs(userQuery)
+      const endPoint = person.docs[0].id
       await signInUser(email, password)
+      console.log(user)
       router.push(`/Profile/${endPoint}`)
     } catch (err) {
       console.log(err.message)
@@ -40,7 +41,7 @@ const SignIn = () => {
     spanStyle: 'text-xs text-gray-600 flex justify-center',
     articleStyle: 'flex justify-center items-center gap-2 pt-2',
     linkStyle: 'text-xs text-red-900',
-    divStyle: 'p-6 bg-zinc-900',
+    divStyle: 'p-6 bg-zinc-900 min-h-screen',
   }
   return (
     <div className={design.divStyle}>

@@ -24,7 +24,7 @@ const Userlist = () => {
 
   return (
     <div className="flex min-h-screen flex-col gap-2 bg-zinc-800 p-10">
-      <h1 className="mb-2 text-center text-7xl underline"> User List </h1>
+      <h1 className="mb-2 text-center text-7xl text-white"> Users </h1>
       <div className="mx-auto flex w-6/12 flex-col gap-2 text-center">
         {users}
       </div>

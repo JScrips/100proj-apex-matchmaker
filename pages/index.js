@@ -5,14 +5,14 @@ const index = () => {
   const { user } = AuthFunctions()
   console.log(user)
   const endpoint = user ? `/Profile/${user.displayName}` : '/SignUp'
+  const welcome = user ? ` ${user.displayName}` : ` Guest`
   return (
-    <div className="flex min-h-screen flex-col bg-black">
-      <h1 className="p-10 text-center text-7xl font-medium text-white">
-        {' '}
-        APEX LEGENDS MATCHMAKER!
-      </h1>
+    <div className="  flex min-h-screen min-w-full flex-col p-2">
+      <span className="mb-4 text-center text-white">
+        Welcome to Apex, {welcome}
+      </span>
       <Link href={endpoint}>
-        <button className="mx-auto w-2/12 bg-red-600 p-4 text-white hover:bg-red-800">
+        <button className="mx-auto w-4/12 bg-red-600 p-1 text-white hover:bg-red-800">
           {' '}
           Enter{' '}
         </button>

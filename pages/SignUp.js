@@ -60,7 +60,7 @@ const SignUp = () => {
     spanStyle: 'text-xs text-gray-600 flex justify-center',
     articleStyle: 'flex justify-center items-center gap-2 pt-2',
     linkStyle: 'text-xs text-red-900',
-    divStyle: 'p-6 bg-zinc-900',
+    divStyle: 'p-6 bg-zinc-900 min-h-screen relative z-10',
   }
   return (
     <div className={design.divStyle}>
