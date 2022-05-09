@@ -1,15 +1,22 @@
 import React from 'react'
 import { AuthFunctions } from '../src/AuthContext'
 import { useRouter } from 'next/router'
+import { db } from '../firebase-config'
+import { doc, updateDoc } from 'firebase/firestore'
 
 const LogoutButton = () => {
   const router = useRouter()
+  const { user } = AuthFunctions()
   /* ==========================Functions================================ */
   //this function logs the user out
   const { logOutUser } = AuthFunctions()
-  const handleLogout = () => {
+
+  const handleLogout = async () => {
     logOutUser()
     router.push('/')
+    await updateDoc(doc(db, 'users', user.displayName), {
+      status: 'Offline',
+    })
   }
 
   /* ==========================Design Object================================ */

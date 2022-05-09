@@ -16,20 +16,23 @@ import { db } from '../../firebase-config'
 import Image from 'next/image'
 import { FaPlaystation, FaXbox } from 'react-icons/fa'
 import { SiNintendoswitch } from 'react-icons/si'
-import { HiDesktopComputer } from 'react-icons/hi'
+import { HiDesktopComputer, HiOutlineStatusOnline } from 'react-icons/hi'
 import { AuthFunctions } from '../../src/AuthContext'
 import { useState, useEffect } from 'react'
 import LikeButtons from '../../components/LikeButtons'
 import ProtectedRoute from '../../components/ProtectedRoute'
+import OnlineStatus from '../../components/onlineStatus'
+import CurrentlyPlaying from '../../components/CurrentlyPlaying'
 
 const Profile = ({ userData }) => {
   const { user } = AuthFunctions()
   const [comment, setComment] = useState('')
   const [commentList, setCommentList] = useState([])
   const [filterBy, setFilterBy] = useState('date')
+  console.log(user)
+  console.log(userData)
 
   const q = query(collection(db, `users/${userData.displayName}/profComments`))
-  console.log(user)
 
   /* ==========================Functions================================ */
   const handleComment = async (e) => {
@@ -113,6 +116,7 @@ const Profile = ({ userData }) => {
                 <span className=" flex justify-center text-lg text-white">
                   "{userData.tagline}"
                 </span>
+                <OnlineStatus userData={userData} />
                 <div className=" mt-2 flex items-center justify-center gap-2 text-lg text-white">
                   <FaPlaystation />
                   <SiNintendoswitch />
@@ -185,7 +189,7 @@ const Profile = ({ userData }) => {
                       className="flex flex-col rounded-lg border-b border-zinc-600 p-6 text-white"
                     >
                       <div
-                        className={`text-right text-[2px] ${deleteButton} hover:cursor-pointer`}
+                        className={`text-right text-[10px] ${deleteButton} hover:cursor-pointer`}
                         onClick={() => handleDelete(comment.id)}
                       >
                         Delete
@@ -256,12 +260,14 @@ const Profile = ({ userData }) => {
                 <span className=" flex justify-center text-xs text-white">
                   "{userData.tagline}"
                 </span>
+                <OnlineStatus userData={userData} />
                 <div className=" mt-2 flex items-center justify-center gap-2 text-xs text-white">
                   <FaPlaystation />
                   <SiNintendoswitch />
                   <FaXbox />
                   <HiDesktopComputer />
                 </div>
+                <CurrentlyPlaying userData={userData} />
               </section>
             </div>
           </article>
@@ -323,7 +329,7 @@ const Profile = ({ userData }) => {
                       className="flex flex-col rounded-lg border border-zinc-600 p-6 text-white"
                     >
                       <div
-                        className={`text-right text-[2px] ${deleteButton} hover:cursor-pointer`}
+                        className={`text-right text-[10px] ${deleteButton} hover:cursor-pointer`}
                         onClick={() => handleDelete(comment.id)}
                       >
                         Delete

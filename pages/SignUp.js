@@ -40,6 +40,7 @@ const SignUp = () => {
           comments: [],
           photoURL: '/apexLogo.png',
           playstyle: [],
+          status: 'Online',
         })
         router.push('/')
       } catch (err) {

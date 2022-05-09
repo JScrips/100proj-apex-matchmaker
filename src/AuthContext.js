@@ -15,7 +15,7 @@ export const AuthContext = createContext()
 //this is the provider for the context we just created. We pass in the children, which are the other components that the context is wrapping.
 export const AuthContextProvider = ({ children }) => {
   //assign a current user when the user logs in. Set it to null to start.
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState({})
   // useEffect will run when the component is mounted, and will run the userStatus function when the user logs in or out.
   useEffect(() => {
     const userStatus = onAuthStateChanged(auth, (currentUser) => {

@@ -3,7 +3,6 @@ import { AuthFunctions } from '../src/AuthContext'
 import Link from 'next/link'
 const index = () => {
   const { user } = AuthFunctions()
-  console.log(user)
   const endpoint = user ? `/Profile/${user.displayName}` : '/SignUp'
   const welcome = user ? ` ${user.displayName}` : ` Guest`
   return (

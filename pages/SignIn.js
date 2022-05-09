@@ -3,7 +3,15 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { AuthFunctions } from '../src/AuthContext'
 import { useRouter } from 'next/router'
-import { collection, query, where, getDocs } from 'firebase/firestore'
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  doc,
+  getDoc,
+} from 'firebase/firestore'
 import { db } from '../firebase-config'
 
 const SignIn = () => {
@@ -20,9 +28,14 @@ const SignIn = () => {
       const userRef = collection(db, 'users')
       const userQuery = query(userRef, where('email', '==', email))
       const person = await getDocs(userQuery)
+
       const endPoint = person.docs[0].id
       await signInUser(email, password)
-      console.log(user)
+      const userDisplay = person.docs[0].data().displayName
+      await updateDoc(doc(db, 'users', userDisplay), {
+        status: 'Online',
+      })
+
       router.push(`/Profile/${endPoint}`)
     } catch (err) {
       console.log(err.message)

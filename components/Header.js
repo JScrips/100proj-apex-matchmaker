@@ -47,12 +47,10 @@ const Header = () => {
 
   const handleTranslate = () => {
     setIsOpen(!isOpen)
-    console.log('open', isOpen)
   }
 
   const closeMenu = () => {
     setIsOpen(true)
-    console.log('menu closed', isOpen)
   }
 
   /*====================Design Object=========================*/
