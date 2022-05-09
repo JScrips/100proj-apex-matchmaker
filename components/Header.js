@@ -43,6 +43,14 @@ const Header = () => {
     </Link>
   )
 
+  const searchUsers = user ? (
+    <Link href="/Search">
+      <a className="">Search Users</a>
+    </Link>
+  ) : (
+    ''
+  )
+
   const toShow = isOpen ? 'hidden' : 'block'
 
   const handleTranslate = () => {
@@ -109,6 +117,7 @@ const Header = () => {
         <nav></nav>
         <nav className={design.headerRightNavStyle}>
           <ul className={design.headerRightNavLinkStyle}>
+            <li>{searchUsers}</li>
             <li>{userList}</li>
             <li>{profileButton}</li>
             <li>{loginButton}</li>
@@ -132,6 +141,12 @@ const Header = () => {
               onClick={() => closeMenu()}
             >
               {userList}
+            </li>
+            <li
+              className="w-full border-b border-red-800 pb-2 text-center"
+              onClick={() => closeMenu()}
+            >
+              {searchUsers}
             </li>
             <li
               className="w-full border-b border-red-800 pb-2 text-center"

@@ -124,6 +124,7 @@ const Profile = ({ userData }) => {
                   <HiDesktopComputer />
                 </div>
               </section>
+              <CurrentlyPlaying userData={userData} />
             </div>
           </article>
 
