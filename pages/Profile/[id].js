@@ -21,7 +21,7 @@ import { AuthFunctions } from '../../src/AuthContext'
 import { useState, useEffect } from 'react'
 import LikeButtons from '../../components/LikeButtons'
 import ProtectedRoute from '../../components/ProtectedRoute'
-import OnlineStatus from '../../components/onlineStatus'
+import OnlineStatus from '../../components/OnlineStatus'
 import CurrentlyPlaying from '../../components/CurrentlyPlaying'
 
 const Profile = ({ userData }) => {
