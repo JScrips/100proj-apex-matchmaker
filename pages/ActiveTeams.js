@@ -36,9 +36,7 @@ const ActiveTeams = () => {
     const userRef = collection(db, 'users')
     const partyLocation = doc(userRef, info.id)
     await updateDoc(partyLocation, {
-      Room: {
-        players: arrayUnion(user.displayName),
-      },
+      players: arrayUnion(user.displayName),
     })
   }
 
