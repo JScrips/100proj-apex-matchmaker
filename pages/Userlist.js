@@ -8,11 +8,21 @@ const Userlist = () => {
   useEffect((e) => {
     const getUsers = async () => {
       const querySnapshot = await getDocs(collection(db, 'users'))
+      console.log(querySnapshot.docs[0].data())
       const users = querySnapshot.docs.map((doc) => {
         return (
           <Link href={`/Profile/${doc.data().displayName}`}>
             <a className="rounded bg-red-600 p-1 font-medium text-white hover:bg-red-800">
-              {doc.data().displayName}
+              <div className="flex justify-between">
+                <span>{doc.data().displayName}</span>
+
+                <span>
+                  {doc.data().currentRank}
+                  {doc.data().currentTier}
+                </span>
+
+                <span>{doc.data().status}</span>
+              </div>
             </a>
           </Link>
         )

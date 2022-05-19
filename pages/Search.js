@@ -46,6 +46,7 @@ const Search = () => {
           <select onChange={(e) => setStatus(e.target.value)}>
             <option value="">Online Status</option>
             <option value="Online">Online</option>
+            <option value="Busy">Busy</option>
             <option value="Offline">Offline</option>
           </select>
           <select onChange={(e) => setChamp(e.target.value)}>

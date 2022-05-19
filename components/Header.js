@@ -51,6 +51,14 @@ const Header = () => {
     ''
   )
 
+  const activeTeams = user ? (
+    <Link href="/ActiveTeams">
+      <a className="">Active Teams</a>
+    </Link>
+  ) : (
+    ''
+  )
+
   const toShow = isOpen ? 'hidden' : 'block'
 
   const handleTranslate = () => {
@@ -117,6 +125,7 @@ const Header = () => {
         <nav></nav>
         <nav className={design.headerRightNavStyle}>
           <ul className={design.headerRightNavLinkStyle}>
+            <li>{activeTeams}</li>
             <li>{searchUsers}</li>
             <li>{userList}</li>
             <li>{profileButton}</li>
@@ -147,6 +156,12 @@ const Header = () => {
               onClick={() => closeMenu()}
             >
               {searchUsers}
+            </li>
+            <li
+              className="w-full border-b border-red-800 pb-2 text-center"
+              onClick={() => closeMenu()}
+            >
+              {activeTeams}
             </li>
             <li
               className="w-full border-b border-red-800 pb-2 text-center"
