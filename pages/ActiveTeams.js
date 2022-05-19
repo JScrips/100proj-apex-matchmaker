@@ -10,6 +10,7 @@ import {
   query,
   where,
   arrayUnion,
+  increment,
 } from 'firebase/firestore'
 import { async } from '@firebase/util'
 import { useState, useEffect } from 'react'
@@ -33,16 +34,20 @@ const ActiveTeams = () => {
   }
 
   const joinTeam = async (info) => {
-    console.log(info.data().Room)
-    const userRef = collection(db, 'users')
-    const partyLocation = doc(userRef, info.id)
-    await updateDoc(partyLocation, {
-      Room: {
-        ...info.data().Room,
-        players: arrayUnion(user.displayName),
-        size: info.data().Room.size + 1,
-      },
-    })
+    console.log(info.data().Room.players)
+    if (info.data().Room.players.length < info.data().Room.maxSize) {
+      const userRef = collection(db, 'users')
+      const partyLocation = doc(userRef, info.id)
+      await updateDoc(partyLocation, {
+        Room: {
+          ...info.data().Room,
+          players: [...info.data().Room.players, user.displayName],
+          size: increment(1),
+        },
+      })
+    } else {
+      alert('team is full')
+    }
   }
 
   useEffect((e) => {
@@ -53,12 +58,16 @@ const ActiveTeams = () => {
         querySnapshot.forEach((doc) => {
           teams.push(
             <div
-              className="flex justify-around gap-6 bg-red-600 p-4 hover:cursor-pointer hover:bg-red-700"
+              className="flex gap-6 bg-red-600 p-4 hover:cursor-pointer hover:bg-red-700"
               onClick={() => joinTeam(doc)}
               key={doc.id}
             >
               <h2>{doc.data().Room.owner}'s Room</h2>
-              <h3>{doc.data().Room.players}</h3>
+              <div className="flex gap-3 border-l border-r pr-2 pl-2">
+                <span className="flex">{doc.data().Room.players[0]}</span>
+                <span className="flex">{doc.data().Room.players[1]}</span>
+                <span className="flex">{doc.data().Room.players[2]}</span>
+              </div>
               <h3>
                 {doc.data().Room.players.length}/{doc.data().Room.maxSize}
               </h3>
