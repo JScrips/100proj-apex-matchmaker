@@ -11,6 +11,7 @@ import {
   where,
   arrayUnion,
   increment,
+  deleteField,
 } from 'firebase/firestore'
 import { async } from '@firebase/util'
 import { useState, useEffect } from 'react'
@@ -42,11 +43,32 @@ const ActiveTeams = () => {
         Room: {
           ...info.data().Room,
           players: [...info.data().Room.players, user.displayName],
-          size: increment(1),
+          size: info.data().Room.players.length + 1,
         },
       })
     } else {
       alert('team is full')
+    }
+  }
+
+  const leaveTeam = async (info) => {
+    const userRef = collection(db, 'users')
+    const partyLocation = doc(userRef, info.id)
+    await updateDoc(partyLocation, {
+      Room: {
+        ...info.data().Room,
+        players: info
+          .data()
+          .Room.players.filter((player) => player !== user.displayName),
+        size: info.data().Room.players.length - 1,
+      },
+    })
+    console.log(info.data().Room.players.length)
+    if (info.data().Room.players.length - 1 === 0) {
+      console.log('This room should be deleted')
+      await updateDoc(partyLocation, {
+        Room: deleteField(),
+      })
     }
   }
 
@@ -56,10 +78,16 @@ const ActiveTeams = () => {
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const teams = []
         querySnapshot.forEach((doc) => {
+          const currentPlayers = doc.data().Room.players
+          const showButton = currentPlayers.includes(user.displayName)
+            ? 'inline-block'
+            : 'hidden'
+          const hideButton = currentPlayers.includes(user.displayName)
+            ? 'hidden'
+            : 'inline-block'
           teams.push(
             <div
-              className="flex gap-6 bg-red-600 p-4 hover:cursor-pointer hover:bg-red-700"
-              onClick={() => joinTeam(doc)}
+              className="flex items-center justify-around bg-red-600 p-4"
               key={doc.id}
             >
               <h2>{doc.data().Room.owner}'s Room</h2>
@@ -71,6 +99,22 @@ const ActiveTeams = () => {
               <h3>
                 {doc.data().Room.players.length}/{doc.data().Room.maxSize}
               </h3>
+              <div>
+                <button
+                  className={`rounded-xl bg-green-400 p-2 hover:bg-green-600 ${hideButton}`}
+                  onClick={() => joinTeam(doc)}
+                >
+                  {' '}
+                  Join Team{' '}
+                </button>
+                <button
+                  className={`rounded-xl bg-red-900 p-2 hover:bg-red-700 ${showButton}`}
+                  onClick={() => leaveTeam(doc)}
+                >
+                  {' '}
+                  Leave Team{' '}
+                </button>
+              </div>
             </div>
           )
         })
