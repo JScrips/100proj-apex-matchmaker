@@ -33,10 +33,15 @@ const ActiveTeams = () => {
   }
 
   const joinTeam = async (info) => {
+    console.log(info.data().Room)
     const userRef = collection(db, 'users')
     const partyLocation = doc(userRef, info.id)
     await updateDoc(partyLocation, {
-      players: arrayUnion(user.displayName),
+      Room: {
+        ...info.data().Room,
+        players: arrayUnion(user.displayName),
+        size: info.data().Room.size + 1,
+      },
     })
   }
 
