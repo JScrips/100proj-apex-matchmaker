@@ -96,10 +96,7 @@ const CurrentlyPlaying = ({ userData }) => {
         <option value="Training">Training</option>
         <option value="Seasonal">Seasonal</option>
       </select>
-      <button
-        className="bg-red-600 p-3 font-medium text-white hover:bg-red-800"
-        onClick={handleSearch}
-      >
+      <button className="bg-red-600 p-3 font-medium text-white hover:bg-red-800">
         {' '}
         Find a Team{' '}
       </button>
