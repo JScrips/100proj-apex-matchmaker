@@ -2,11 +2,14 @@ import { updateDoc, doc, onSnapshot } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { useState, useEffect } from 'react'
 import { AuthFunctions } from '../src/AuthContext'
+import { useRouter } from 'next/router'
+
 const CurrentlyPlaying = ({ userData }) => {
   const [mode, setMode] = useState('')
   const [tier, setTier] = useState('')
   const [champ, setChamp] = useState('')
   const { user } = AuthFunctions()
+  const router = useRouter()
 
   const profileOwner =
     user.displayName === userData.displayName ? 'block' : 'hidden'
@@ -93,7 +96,13 @@ const CurrentlyPlaying = ({ userData }) => {
         <option value="Training">Training</option>
         <option value="Seasonal">Seasonal</option>
       </select>
-      <button> </button>
+      <button
+        className="bg-red-600 p-3 font-medium text-white hover:bg-red-800"
+        onClick={handleSearch}
+      >
+        {' '}
+        Find a Team{' '}
+      </button>
     </div>
   )
 }
