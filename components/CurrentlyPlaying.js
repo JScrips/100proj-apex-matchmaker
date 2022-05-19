@@ -1,4 +1,4 @@
-import { updateDoc, doc, onSnapshot } from 'firebase/firestore'
+import { updateDoc, doc, onSnapshot, collection } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { useState, useEffect } from 'react'
 import { AuthFunctions } from '../src/AuthContext'
@@ -39,6 +39,20 @@ const CurrentlyPlaying = ({ userData }) => {
       setChamp(doc.data().currentChamp)
     })
   }, [])
+
+  const handleSearch = async () => {
+    const userRef = collection(db, 'users')
+    const partyLocation = doc(userRef, user.displayName)
+    await updateDoc(partyLocation, {
+      Room: {
+        owner: user.displayName,
+        players: [user.displayName],
+        size: 1,
+        maxSize: 3,
+      },
+    })
+    router.push('/ActiveTeams')
+  }
 
   return (
     <div className={`mt-10 flex w-full flex-col gap-4 text-xs ${profileOwner}`}>
@@ -96,9 +110,12 @@ const CurrentlyPlaying = ({ userData }) => {
         <option value="Training">Training</option>
         <option value="Seasonal">Seasonal</option>
       </select>
-      <button className="bg-red-600 p-3 font-medium text-white hover:bg-red-800">
+      <button
+        className="bg-red-600 p-3 font-medium text-white hover:bg-red-800"
+        onClick={() => handleSearch()}
+      >
         {' '}
-        Find a Team{' '}
+        Create a Team{' '}
       </button>
     </div>
   )
