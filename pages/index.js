@@ -1,21 +1,42 @@
 import LogoutButton from '../components/LogoutButton'
 import { AuthFunctions } from '../src/AuthContext'
 import Link from 'next/link'
+import Image from 'next/image'
 const index = () => {
   const { user } = AuthFunctions()
   const endpoint = user ? `/Profile/${user.displayName}` : '/SignUp'
   const welcome = user ? ` ${user.displayName}` : ` Guest`
   return (
-    <div className="  flex min-h-screen min-w-full flex-col p-2">
-      <span className="mb-4 text-center text-white">
-        Welcome to Apex, {welcome}
-      </span>
-      <Link href={endpoint}>
-        <button className="mx-auto w-4/12 bg-red-600 p-1 text-white hover:bg-red-800">
-          {' '}
-          Enter{' '}
-        </button>
-      </Link>
+    <div classNameName="  flex min-h-screen min-w-full justify-center flex-col p-2">
+      <div>
+        <Image
+          src="/kingscanyon.jpg"
+          width={1920}
+          height={1080}
+          objectFit="cover"
+          layout="responsive"
+          className=""
+        />
+      </div>
+
+      <div className="absolute inset-60 z-10 mx-auto mb-16 max-w-2xl flex-col items-center justify-center text-center">
+        <h2 className="font-heading pb-4 text-4xl font-bold text-white lg:text-5xl">
+          Matchmake. Dominate.
+        </h2>
+
+        <div>
+          <Link href="/SignUp">
+            <a className="mb-3 inline-block w-full rounded border border-red-600 bg-red-600 py-3 px-6 font-semibold text-white transition duration-200 hover:bg-red-700 lg:mb-0 lg:mr-3 lg:w-auto">
+              Try for Free
+            </a>
+          </Link>
+        </div>
+        <div className="relative mx-auto mt-6 max-w-3xl">
+          <video autoplay muted controls>
+            <source src="/herovideo.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
     </div>
   )
 }
