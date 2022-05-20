@@ -51,14 +51,17 @@ const index = () => {
             layout=""
           />
         </div>
-        <div className="inset-30 absolute z-10 mx-auto mb-16 max-w-2xl flex-col items-center justify-center text-center">
-          <h2 className="font-heading text-4xl font-bold text-white lg:text-5xl">
-            Matchmake. Dominate.
-          </h2>
+        <div className="inset-30 absolute z-10 mx-auto mb-16 flex max-w-2xl flex-col flex-col items-center justify-center text-center">
+          <span className="font-heading text-4xl font-bold text-white lg:text-5xl">
+            Matchmake.
+          </span>
+          <span className="font-heading text-4xl font-bold text-white lg:text-5xl">
+            Dominate.
+          </span>
 
           <div>
             <Link href="/SignUp">
-              <a className="mx-auto mb-3 inline-block w-4/12 rounded border border-white bg-red-900 py-2 px-2 font-medium text-white transition duration-200 hover:bg-red-700">
+              <a className="mx-auto mb-3 inline-block  rounded border border-white bg-red-900 py-2 px-2 font-medium text-white transition duration-200 hover:bg-red-700">
                 Try for Free
               </a>
             </Link>
