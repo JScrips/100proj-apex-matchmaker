@@ -74,7 +74,7 @@ const CurrentlyPlaying = ({ userData }) => {
         <option value="Lifeline">Lifeline</option>
         <option value="Loba">Loba</option>
         <option value="Mad Maggie">Mad Maggie</option>
-        <option value="Mirage">Mirage</option>
+        <option value="Mirage">Mirage</option>npm
         <option value="Newcastle">Newcastle</option>
         <option value="Pathfinder">Pathfinder</option>
         <option value="Rampart">Rampart</option>
