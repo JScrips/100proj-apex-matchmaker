@@ -66,7 +66,7 @@ const index = () => {
               </a>
             </Link>
           </div>
-          <div className="relative mx-auto mt-36 w-11/12">
+          <div className="relative mt-36 w-11/12">
             <video autoPlay muted className="rounded-lg">
               <source src="/herovideo.mp4" type="video/mp4" />
             </video>
