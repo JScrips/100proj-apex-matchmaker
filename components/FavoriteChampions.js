@@ -237,198 +237,177 @@ const FavoriteChampions = ({ userData }) => {
 
       {/*==========================Mobile==========================*/}
       <section className="block w-full md:hidden">
-        <fieldset className="grid grid-cols-2  gap-x-20 gap-y-2 border p-6 text-base ">
+        <fieldset className="grid grid-cols-2 gap-y-2 p-10 text-[12px] ">
           <legend className=" border bg-red-800 p-2 text-[16px]">
             Favorite Champions:
           </legend>
 
           <button
             value="Ash"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className={`text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale `}
+            onClick={(e) => handleFavoriteChampion('Ash')}
           >
-            {' '}
-            Ash{' '}
+            <Image src="/Ash.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Bangalore"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className={`text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale `}
+            onClick={(e) => handleFavoriteChampion('Bangalore')}
           >
-            {' '}
-            Bangalore{' '}
+            <Image src="/Bangalore.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Bloodhound"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Bloodhound')}
           >
-            {' '}
-            Bloodhound{' '}
+            <Image src="/Bloodhound.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Caustic"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Caustic')}
           >
-            {' '}
-            Caustic{' '}
+            <Image src="/Caustic.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Crypto"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Crypto')}
           >
-            {' '}
-            Crypto{' '}
+            <Image src="/Crypto.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Fuse"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Fuse')}
           >
-            {' '}
-            Fuse{' '}
+            <Image src="/Fuse.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Gibraltar"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Gibraltar')}
           >
-            {' '}
-            Gibraltar{' '}
+            <Image src="/Gibraltar.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Horizon"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Horizon')}
           >
-            {' '}
-            Horizon{' '}
+            <Image src="/Horizon.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Lifeline"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Lifeline')}
           >
-            {' '}
-            Lifeline{' '}
+            <Image src="/Lifeline.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Loba"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Loba')}
           >
-            {' '}
-            Loba{' '}
+            <Image src="/Loba.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Mad Maggie"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Mad Maggie')}
           >
-            {' '}
-            Mad Maggie{' '}
+            <Image src="/MadMaggie.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Mirage"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Mirage')}
           >
-            {' '}
-            Mirage{' '}
+            <Image src="/Mirage.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Newcastle"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Newcastle')}
           >
-            {' '}
-            Newcastle{' '}
+            <Image src="/NewCastle.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Octane"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Octane')}
           >
-            {' '}
-            Octane{' '}
+            <Image src="/Octane.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Pathfinder"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Pathfinder')}
           >
-            {' '}
-            Pathfinder{' '}
+            <Image src="/Pathfinder.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Rampart"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Rampart')}
           >
-            {' '}
-            Rampart{' '}
+            <Image src="/Rampart.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Revenant"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Revenant')}
           >
-            {' '}
-            Revenant{' '}
+            <Image src="/Revenant.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Seer"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Seer')}
           >
-            {' '}
-            Seer{' '}
+            <Image src="/Seer.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Valkyrie"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Valkyrie')}
           >
-            {' '}
-            Valkyrie{' '}
+            <Image src="/Valkyrie.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Wattson"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Wattson')}
           >
-            {' '}
-            Wattson{' '}
+            <Image src="/Wattson.png" height={121} width={185}></Image>
           </button>
 
           <button
             value="Wraith"
-            className="text-[16px] font-medium hover:text-red-600"
-            onClick={(e) => handleFavoriteChampion(e.target.value)}
+            className="text-[16px] font-medium hover:scale-110 hover:text-red-600 hover:grayscale"
+            onClick={(e) => handleFavoriteChampion('Wraith')}
           >
-            {' '}
-            Wraith{' '}
+            <Image src="/Wraith.png" height={121} width={185}></Image>
           </button>
         </fieldset>
         <div className="flex w-full items-center gap-6 pt-2">
