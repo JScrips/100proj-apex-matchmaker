@@ -9,7 +9,7 @@ import { useState } from 'react'
 
 const Header = () => {
   const { user } = AuthFunctions()
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
   /* =================Conditional Renders===================== */
   const welcome = user ? ` ${user.displayName}` : ` Guest`
 

@@ -33,7 +33,7 @@ const index = () => {
             </Link>
           </div>
           <div className="relative mx-auto mt-6 max-w-3xl">
-            <video autoPlay muted controls>
+            <video autoPlay muted>
               <source src="/herovideo.mp4" type="video/mp4" />
             </video>
           </div>
@@ -64,7 +64,7 @@ const index = () => {
             </Link>
           </div>
           <div className="relative mx-auto mt-36 w-11/12">
-            <video autoPlay muted controls className="rounded-lg">
+            <video autoPlay muted className="rounded-lg">
               <source src="/herovideo.mp4" type="video/mp4" />
             </video>
           </div>
