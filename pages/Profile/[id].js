@@ -11,6 +11,7 @@ import {
   addDoc,
   orderBy,
   deleteDoc,
+  getDoc,
 } from 'firebase/firestore'
 import { db } from '../../firebase-config'
 import Image from 'next/image'
@@ -29,11 +30,9 @@ const Profile = ({ userData }) => {
   const [comment, setComment] = useState('')
   const [commentList, setCommentList] = useState([])
   const [filterBy, setFilterBy] = useState('date')
-  console.log(user)
-  console.log(userData)
 
   const q = query(collection(db, `users/${userData.displayName}/profComments`))
-
+  console.log(user.photoURL)
   /* ==========================Functions================================ */
   const handleComment = async (e) => {
     e.preventDefault()
@@ -339,17 +338,27 @@ const Profile = ({ userData }) => {
                       <span className="mb-8 text-[14px]">
                         {comment.comment}
                       </span>
-                      <div className="flex items-center gap-6">
-                        <span className="text-[2px]">By: {comment.by}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-[1px]">{comment.date}</span>
-                        <LikeButtons
-                          id={comment.id}
-                          likes={comment.likes}
-                          dislikes={comment.dislikes}
-                          name={userData.displayName}
+                      <div className="flex items-center justify-between">
+                        <Image
+                          src={user.photoURL}
+                          height={70}
+                          width={70}
+                          className="rounded-full"
                         />
+                        <div className="flex flex-col">
+                          <div className="flex items-center gap-6 ">
+                            <span className="text-[2px]">By: {comment.by}</span>
+                          </div>
+                          <div className="flex gap-64">
+                            <span className="text-[1px]">{comment.date}</span>
+                            <LikeButtons
+                              id={comment.id}
+                              likes={comment.likes}
+                              dislikes={comment.dislikes}
+                              name={userData.displayName}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )

@@ -5,6 +5,8 @@ import { ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage'
 import { doc, updateDoc, onSnapshot, getDoc } from 'firebase/firestore'
 import { AuthFunctions } from '../src/AuthContext'
 import { db } from '../firebase-config'
+import { updateProfile } from 'firebase/auth'
+import { auth } from '../firebase-config'
 
 const UploadAvatar = ({ userData }) => {
   const [file, setFile] = useState('')
@@ -33,6 +35,9 @@ const UploadAvatar = ({ userData }) => {
     uploadBytes(imgRef, file).then(() => {
       getDownloadURL(imgRef).then((url) => {
         updateDoc(docRef, {
+          photoURL: url,
+        })
+        updateProfile(auth.currentUser, {
           photoURL: url,
         })
       })
