@@ -67,7 +67,7 @@ const index = () => {
             </Link>
           </div>
           <div className="relative mt-36 w-11/12">
-            <video autoPlay muted className="rounded-lg">
+            <video autoPlay muted playsInline className="rounded-lg">
               <source src="/herovideo.mp4" type="video/mp4" />
             </video>
           </div>

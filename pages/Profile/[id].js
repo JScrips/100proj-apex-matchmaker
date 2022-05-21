@@ -90,7 +90,8 @@ const Profile = ({ userData }) => {
 
   /* ==========================Conditional Rendering================================ */
   const profilePic = userData.profilePic ? userData.ProfilePic : '/apexLogo.png'
-  const photoURL = user && user.photoURL ? user.photoURL : '/apexLogo.png'
+  const photoURL =
+    user && userData.photoURL ? userData.photoURL : '/apexLogo.png'
 
   return (
     <ProtectedRoute>

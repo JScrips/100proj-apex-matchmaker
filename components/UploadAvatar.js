@@ -1,24 +1,68 @@
-import React from 'react'
+import Image from 'next/image'
+import { useState, useEffect } from 'react'
+import { storage } from '../firebase-config'
+import { ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage'
+import { doc, updateDoc, onSnapshot, getDoc } from 'firebase/firestore'
+import { AuthFunctions } from '../src/AuthContext'
+import { db } from '../firebase-config'
 
-const UploadAvatar = () => {
+const UploadAvatar = ({ userData }) => {
+  const [file, setFile] = useState('')
+  const [url, setUrl] = useState('')
+  const [avatar, setAvatar] = useState('')
+  const { user } = AuthFunctions()
+  const show = avatar ? avatar : '/apexLogo.png'
+
+  useEffect(async () => {
+    const docRef = doc(db, 'users', userData.displayName)
+    const docSnap = await getDoc(docRef)
+    if (docSnap.exists()) {
+      setAvatar(docSnap.data().photoURL)
+    }
+  }, [avatar])
+
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setFile(e.target.files[0])
+    }
+  }
+
+  const handleSubmit = () => {
+    const imgRef = ref(storage, `avatars/${userData.displayName}`)
+    const docRef = doc(db, `users/${userData.displayName}`)
+    uploadBytes(imgRef, file).then(() => {
+      getDownloadURL(imgRef).then((url) => {
+        updateDoc(docRef, {
+          photoURL: url,
+        })
+      })
+    })
+    setFile('')
+    alert('Avatar updated!')
+  }
+
   return (
-    <div>
+    <div className=" flex flex-col gap-4 rounded-lg bg-zinc-800 text-center">
       <Image
-        src={userData.photoURL}
-        height={100}
-        width={100}
-        className="rounded-full"
+        src={show}
+        width={400}
+        height={400}
         objectFit="cover"
-      ></Image>
-      <div className="flex items-center gap-20">
-        <label htmlFor="avatar"> Upload a new avatar </label>
-        <input
-          type="file"
-          name="avatar"
-          accept="image/*"
-          className="text-[12px]"
-        ></input>
-      </div>
+        className="rounded-full"
+      />
+
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        className=" font-medium text-white"
+      />
+      <button
+        className="mx-auto w-5/12 bg-red-600 p-2 font-medium text-white hover:cursor-pointer hover:bg-red-800"
+        onClick={handleSubmit}
+      >
+        Submit
+      </button>
     </div>
   )
 }
