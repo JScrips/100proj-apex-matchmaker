@@ -2,6 +2,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const Search = () => {
   const [search, setSearch] = useState('')
@@ -11,9 +12,11 @@ const Search = () => {
   const [mode, setMode] = useState('')
   const [status, setStatus] = useState('')
   const [error, setError] = useState('')
+  const [manualInput, setManualInput] = useState('')
 
   const handleSearch = async () => {
     const userRef = collection(db, 'users')
+
     const userQuery = query(
       userRef,
       where('status', '==', status),
@@ -22,26 +25,66 @@ const Search = () => {
       where('mode', '==', mode)
     )
     const querySnapshot = await getDocs(userQuery)
-    console.log(querySnapshot)
     const users = []
     querySnapshot.forEach((doc) => {
-      console.log(doc.data())
       users.push(doc.data())
     })
+
+    const defaultQuery = query(userRef)
+    const defaultSnapshot = await getDocs(defaultQuery)
+    const fallback = []
+    defaultSnapshot.forEach((doc) => {
+      fallback.push(doc.data())
+    })
+
+    const manualQuery = query(userRef, where('displayName', '==', manualInput))
+    const manualSnapshot = await getDocs(manualQuery)
+    manualSnapshot.forEach((doc) => {
+      users.push(doc.data())
+    })
+
+    const statusQuery = query(userRef, where('status', '==', status))
+    const statusSnapshot = await getDocs(statusQuery)
+    statusSnapshot.forEach((doc) => {
+      users.push(doc.data())
+    })
+
+    const champQuery = query(userRef, where('currentChamp', '==', champ))
+    const champSnapshot = await getDocs(champQuery)
+    champSnapshot.forEach((doc) => {
+      users.push(doc.data())
+    })
+
+    const tierQuery = query(userRef, where('tier', '==', tier))
+    const tierSnapshot = await getDocs(tierQuery)
+    tierSnapshot.forEach((doc) => {
+      users.push(doc.data())
+    })
+
+    const modeQuery = query(userRef, where('mode', '==', mode))
+    const modeSnapshot = await getDocs(modeQuery)
+    modeSnapshot.forEach((doc) => {
+      users.push(doc.data())
+    })
+
     if (users.length === 0) {
-      setError(
-        `No users found with the following criteria:  ${status}, ${champ}, ${mode}, ${tier}`
-      )
-    } else {
-      setError('')
+      alert('No users found with those params')
+      setUsers(fallback)
+    } else if (users.length >= 1) {
+      setUsers(users)
     }
-    setUsers(users)
   }
 
   return (
     <div className="flex min-h-screen min-w-full flex-col p-2">
       <div className="flex flex-col">
         <h1 className=" text-center text-white">Search Players</h1>
+        <input
+          className="mx-auto w-full p-2 lg:w-6/12"
+          placeholder="Dominator (case-sensitive)"
+          onChange={(e) => setManualInput(e.target.value)}
+        />
+        <div className="text-center text-white">OR</div>
         <div className="flex flex-col gap-10 p-4 sm:hidden">
           <select onChange={(e) => setStatus(e.target.value)}>
             <option value="">Online Status</option>
@@ -91,13 +134,8 @@ const Search = () => {
             <option value="Master">Master</option>
             <option value="Apex Predator">Apex Predator</option>
           </select>
-          <button
-            className="rounded-xl bg-red-600 p-2 text-white hover:bg-red-900"
-            onClick={() => handleSearch()}
-          >
-            Search{' '}
-          </button>
         </div>
+
         {/*========================DESKTOP=======================================*/}
         <div className="hidden gap-10 p-4 md:flex md:justify-center">
           <select onChange={(e) => setStatus(e.target.value)}>
@@ -147,35 +185,72 @@ const Search = () => {
             <option value="Master">Master</option>
             <option value="Apex Predator">Apex Predator</option>
           </select>
-          <button
-            className="rounded-xl bg-red-600 p-2 text-white hover:bg-red-900"
-            onClick={() => handleSearch()}
-          >
-            Search{' '}
-          </button>
         </div>
+        <button
+          className="mx-auto mb-4 rounded-xl bg-red-600 p-2 text-white hover:bg-red-900 lg:w-1/12"
+          onClick={() => handleSearch()}
+        >
+          Search{' '}
+        </button>
       </div>
-      <div className="text-white">
-        {users.length != 0 ? (
-          users.map((champ) => {
-            return (
-              <div
-                key={champ}
-                className="flex  gap-36 rounded bg-red-600 p-1 text-justify font-medium text-white hover:bg-red-800"
-              >
-                <Link href={`/Profile/${champ.displayName}`}>
-                  <a>{champ.displayName}</a>
-                </Link>
-                <span> Playing as: {champ.currentChamp} </span>
-                <span> Current Tier: {champ.tier} </span>
-                <span> Status: {champ.status} </span>
-                <span>Current Mode: {champ.mode} </span>
-              </div>
-            )
-          })
-        ) : (
-          <div className="text-center">{error}</div>
-        )}
+      <div className="text-white lg:grid lg:grid-cols-6 lg:grid-rows-4 lg:gap-4 ">
+        {users.map((champ) => {
+          const tierFiller = champ.tier ? champ.tier : 'N/A'
+          const champFiller = champ.currentChamp ? champ.currentChamp : 'N/A'
+          const modeFiller = champ.mode ? champ.mode : 'N/A'
+          return (
+            <Link href={`/Profile/${champ.displayName}`}>
+              <a>
+                <div
+                  key={champ}
+                  className="mb-2 flex items-center justify-between gap-2 rounded-lg bg-zinc-900 p-2 text-white hover:cursor-pointer hover:bg-zinc-800 lg:flex-col"
+                >
+                  <div className="flex flex-col items-center gap-2 p-4">
+                    <Image
+                      src={champ.photoURL}
+                      width={70}
+                      height={70}
+                      className="rounded-full"
+                      objectFit="cover"
+                    />
+                    <span>{champ.displayName}</span>
+                  </div>
+                  <div className="mb-2 hidden gap-2 text-[14px] lg:block">
+                    {tierFiller}
+                  </div>
+                  <div className=" hidden gap-2 lg:flex">
+                    <span className="rounded-full bg-red-600 p-1 text-[10px] font-medium">
+                      Aggressive{' '}
+                    </span>
+                    <span className="rounded-full bg-green-600 p-1 text-[10px] font-medium">
+                      Tactical{' '}
+                    </span>
+                    <span className="rounded-full bg-black p-1 text-[10px] font-medium">
+                      3rd Party{' '}
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-2 lg:hidden">
+                    <span className="rounded-full bg-red-600 p-1 text-[10px] font-medium">
+                      Aggressive{' '}
+                    </span>
+                    <span className="rounded-full bg-green-600 p-1 text-[10px] font-medium">
+                      Tactical{' '}
+                    </span>
+                    <span className="rounded-full bg-black p-1 text-[10px] font-medium">
+                      3rd Party{' '}
+                    </span>
+                  </div>
+
+                  <div className="hidden text-[18px] lg:block">
+                    {modeFiller} - {champFiller}
+                  </div>
+
+                  <div className="mt-4 gap-2 text-right">{champ.status}</div>
+                </div>
+              </a>
+            </Link>
+          )
+        })}
       </div>
     </div>
   )

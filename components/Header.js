@@ -33,14 +33,6 @@ const Header = () => {
     ''
   )
 
-  const userList = user ? (
-    <Link href="/Userlist">
-      <a className="">User List</a>
-    </Link>
-  ) : (
-    ''
-  )
-
   const searchUsers = user ? (
     <Link href="/Search">
       <a className="">Search Users</a>
@@ -125,7 +117,6 @@ const Header = () => {
           <ul className={design.headerRightNavLinkStyle}>
             <li>{activeTeams}</li>
             <li>{searchUsers}</li>
-            <li>{userList}</li>
             <li>{profileButton}</li>
             <li>{loginButton}</li>
             <li>{settingsButton}</li>
@@ -143,12 +134,6 @@ const Header = () => {
           <ul
             className={`relative ml-auto  flex flex-col items-center gap-4 bg-red-900 p-2 text-sm text-white transition duration-500 md:hidden   `}
           >
-            <li
-              className="w-full border-b border-red-800 pb-2 text-center"
-              onClick={() => closeMenu()}
-            >
-              {userList}
-            </li>
             <li
               className="w-full border-b border-red-800 pb-2 text-center"
               onClick={() => closeMenu()}

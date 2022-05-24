@@ -356,15 +356,16 @@ const Profile = ({ userData }) => {
                       >
                         Delete
                       </div>
-                      <span className="mb-8 text-[14px]">
+                      <span className="mb-8 border-b border-white border-opacity-10 pb-20 text-[14px]">
                         {comment.comment}
                       </span>
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between gap-2">
                         <Image
                           src={comment.profilePic}
                           height={70}
                           width={70}
                           className="rounded-full"
+                          objectFit="cover"
                           onClick={() => {
                             handleNavigate(comment.by)
                           }}
