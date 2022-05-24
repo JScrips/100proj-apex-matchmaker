@@ -102,10 +102,10 @@ const Profile = ({ userData }) => {
   return (
     <ProtectedRoute>
       {/* ==========================Mobile Profile================================ */}
-      <div className="block bg-neutral-700 md:hidden">
+      <div className="block bg-neutral-700 p-4 md:hidden">
         <div className="flex min-h-screen flex-col items-center ">
           <article className="flex  flex-col items-center rounded-xl p-2 text-center">
-            <div className="sticky top-0">
+            <div className=" sticky top-0 ">
               <div className="">
                 <Image
                   src={photoURL}
@@ -115,7 +115,7 @@ const Profile = ({ userData }) => {
                   objectFit="cover"
                 />
               </div>
-              <section className="">
+              <section className=" border-6 border-black">
                 <span className=" text-6xl font-medium text-white">
                   {userData.displayName}
                 </span>

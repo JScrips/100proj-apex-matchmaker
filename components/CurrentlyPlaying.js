@@ -55,7 +55,9 @@ const CurrentlyPlaying = ({ userData }) => {
   }
 
   return (
-    <div className={`mt-10 flex w-full flex-col gap-4 text-xs ${profileOwner}`}>
+    <div
+      className={`mt-10 flex w-full flex-col gap-4 text-xs ${profileOwner} w-11/12  p-6`}
+    >
       <span className="text-white">I am currently Playing:</span>
       <span className="text-xl font-medium text-white">{champ} </span>
       <select

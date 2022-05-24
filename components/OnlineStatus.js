@@ -123,7 +123,7 @@ const OnlineStatus = ({ userData }) => {
   }, [status])
 
   return (
-    <div className={`flex flex-col`}>
+    <div className={`flex w-11/12 flex-col p-6`}>
       {showStatusInfo}
       <select
         className={` bg-zinc-900 text-white ${shouldShow}`}
