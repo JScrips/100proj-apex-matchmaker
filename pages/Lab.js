@@ -1,7 +1,5 @@
-import UserSearch from '../components/UserSearch'
-
 const Lab = () => {
-  return <UserSearch />
+  return <> </>
 }
 
 export default Lab
