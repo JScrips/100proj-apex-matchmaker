@@ -6,6 +6,7 @@ import { setDoc, doc, getDoc, collection } from 'firebase/firestore'
 import { db } from '../firebase-config'
 import { useRouter } from 'next/router'
 import { updateProfile } from 'firebase/auth'
+import { check } from 'prettier'
 
 const SignUpComponent = () => {
   const { user } = AuthFunctions()
@@ -23,7 +24,6 @@ const SignUpComponent = () => {
       const docRef = doc(db, 'users', displayName)
       console.log(docRef)
       const createdDisplayName = await getDoc(docRef)
-
       if (createdDisplayName.exists()) {
         alert('Display Name already exists')
       } else {
@@ -53,6 +53,45 @@ const SignUpComponent = () => {
       }
     } else {
       alert('Passwords do not match')
+    }
+  }
+
+  const checkAlpha = (e) => {
+    const word = e.split('')
+    if (
+      word.includes('!') ||
+      word.includes('@') ||
+      word.includes('#') ||
+      word.includes('$') ||
+      word.includes('%') ||
+      word.includes('^') ||
+      word.includes('&') ||
+      word.includes('*') ||
+      word.includes('(') ||
+      word.includes(')') ||
+      word.includes('-') ||
+      word.includes('_') ||
+      word.includes('+') ||
+      word.includes('=') ||
+      word.includes('[') ||
+      word.includes(']') ||
+      word.includes('{') ||
+      word.includes('}') ||
+      word.includes(';') ||
+      word.includes(':') ||
+      word.includes("'") ||
+      word.includes('"') ||
+      word.includes('<') ||
+      word.includes('>') ||
+      word.includes('?') ||
+      word.includes('/') ||
+      word.includes('|') ||
+      word.includes('\\') ||
+      word.includes('`')
+    ) {
+      alert('Please do not use special characters')
+    } else {
+      console.log('no special characters')
     }
   }
   return (
@@ -88,6 +127,8 @@ const SignUpComponent = () => {
                     type="email"
                     placeholder="e.g ApexPredator"
                     onChange={(e) => setDisplayName(e.target.value)}
+                    onBlur={(e) => checkAlpha(e.target.value)}
+                    required
                   />
                   <span className="absolute top-0 left-0 ml-4 -mt-2 inline-block  rounded-xl bg-white px-1 text-xs font-medium text-red-800">
                     Display Name
@@ -99,6 +140,7 @@ const SignUpComponent = () => {
                     type="email"
                     placeholder="e.g apex@royale.com"
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                   <span className="absolute top-0 left-0 ml-4 -mt-2 inline-block  rounded-xl bg-white px-1 text-xs font-medium text-red-800">
                     E-Mail
@@ -110,6 +152,7 @@ const SignUpComponent = () => {
                     type="password"
                     placeholder="******"
                     onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                   <span className="absolute top-0 left-0 ml-4 -mt-2 inline-block  rounded-xl bg-white px-1 text-xs font-medium text-red-800">
                     Password
@@ -122,6 +165,7 @@ const SignUpComponent = () => {
                     type="password"
                     placeholder="******"
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
                   />
                   <span className="absolute top-0 left-0 ml-4 -mt-2 inline-block  rounded-xl bg-white px-1 text-xs font-medium text-red-800">
                     Confirm Password
@@ -139,7 +183,7 @@ const SignUpComponent = () => {
           </div>
         </div>
       </div>
-      <div className="absolute top-0 right-0 bottom-0 h-auto w-1/2 bg-red-800">
+      <div className="hidden lg:absolute lg:top-0 lg:right-0 lg:bottom-0 lg:block lg:h-auto lg:w-1/2 lg:bg-red-800">
         <svg
           width="1000"
           height="900"

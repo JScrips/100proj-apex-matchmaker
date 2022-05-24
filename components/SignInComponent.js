@@ -75,6 +75,7 @@ const SignInComponent = () => {
                     type="email"
                     placeholder="e.g apex@royale.com"
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                   <span className="absolute top-0 left-0 ml-4 -mt-2 inline-block  rounded-xl bg-white px-1 text-xs font-medium text-red-800">
                     E-Mail
@@ -86,6 +87,7 @@ const SignInComponent = () => {
                     type="password"
                     placeholder="******"
                     onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                   <span className="absolute top-0 left-0 ml-4 -mt-2 inline-block  rounded-xl bg-white px-1 text-xs font-medium text-red-800">
                     Password
@@ -103,7 +105,7 @@ const SignInComponent = () => {
           </div>
         </div>
       </div>
-      <div className="absolute top-0 right-0 bottom-0 h-auto w-1/2 bg-red-800">
+      <div className="hidden lg:absolute lg:top-0 lg:right-0 lg:bottom-0 lg:block lg:h-auto lg:w-1/2 lg:bg-red-800">
         <svg
           width="1000"
           height="900"
