@@ -38,9 +38,7 @@ const Header = () => {
       <a className="">User List</a>
     </Link>
   ) : (
-    <Link href="/SignIn">
-      <a>User List</a>
-    </Link>
+    ''
   )
 
   const searchUsers = user ? (

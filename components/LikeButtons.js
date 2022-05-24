@@ -62,11 +62,16 @@ const LikeButtons = ({ name, likes, dislikes, id }) => {
   }
 
   const unsub = onSnapshot(doc(commentRef, id), (docSnapshot) => {
-    if (docSnapshot.exists && docSnapshot.data().likes) {
+    console.log(docSnapshot.data().likes)
+    if (docSnapshot.exists && docSnapshot.data().likes !== undefined) {
       setLikeCount(docSnapshot.data().likes.length)
+    } else {
+      setLikeCount(0)
     }
-    if (docSnapshot.exists && docSnapshot.data().dislikes) {
+    if (docSnapshot.exists && docSnapshot.data().dislikes !== undefined) {
       setDislikeCount(docSnapshot.data().dislikes.length)
+    } else {
+      setDislikeCount(0)
     }
   })
 

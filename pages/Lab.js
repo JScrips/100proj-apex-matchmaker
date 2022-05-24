@@ -1,10 +1,12 @@
+import React from 'react'
 import SignUpComponent from '../components/SignUpComponent'
 
-const SignUp = () => {
+const Lab = () => {
   return (
-    <>
+    <div>
       <SignUpComponent />
-    </>
+    </div>
   )
 }
-export default SignUp
+
+export default Lab

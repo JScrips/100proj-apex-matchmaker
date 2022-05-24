@@ -24,12 +24,15 @@ import LikeButtons from '../../components/LikeButtons'
 import ProtectedRoute from '../../components/ProtectedRoute'
 import OnlineStatus from '../../components/OnlineStatus'
 import CurrentlyPlaying from '../../components/CurrentlyPlaying'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const Profile = ({ userData }) => {
   const { user } = AuthFunctions()
   const [comment, setComment] = useState('')
   const [commentList, setCommentList] = useState([])
   const [filterBy, setFilterBy] = useState('date')
+  const router = useRouter()
 
   const q = query(collection(db, `users/${userData.displayName}/profComments`))
   console.log(user.photoURL)
@@ -68,6 +71,10 @@ const Profile = ({ userData }) => {
     } catch (err) {
       console.log(err.message)
     }
+  }
+
+  const handleNavigate = (user) => {
+    router.push(`/Profile/${user}`)
   }
 
   useEffect(() => {
@@ -340,11 +347,15 @@ const Profile = ({ userData }) => {
                       </span>
                       <div className="flex items-center justify-between">
                         <Image
-                          src={user.photoURL}
+                          src={comment.profilePic}
                           height={70}
                           width={70}
                           className="rounded-full"
+                          onClick={() => {
+                            handleNavigate(comment.by)
+                          }}
                         />
+
                         <div className="flex flex-col">
                           <div className="flex items-center gap-6 ">
                             <span className="text-[2px]">By: {comment.by}</span>

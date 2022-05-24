@@ -12,8 +12,8 @@ const LogoutButton = () => {
   const { logOutUser } = AuthFunctions()
 
   const handleLogout = async () => {
-    logOutUser()
     router.push('/')
+    logOutUser()
     await updateDoc(doc(db, 'users', user.displayName), {
       status: 'Offline',
     })
