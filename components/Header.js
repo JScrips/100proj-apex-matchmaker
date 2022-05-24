@@ -61,6 +61,7 @@ const Header = () => {
     setIsOpen(true)
   }
 
+  const userOption = user ? 'block' : 'hidden'
   /*====================Design Object=========================*/
   const design = {
     headerStyle:
@@ -121,7 +122,7 @@ const Header = () => {
             <li>{searchUsers}</li>
             <li>{profileButton}</li>
             <li>{loginButton}</li>
-            <li>{settingsButton}</li>
+            <li className="">{settingsButton}</li>
           </ul>
         </nav>
 
@@ -137,13 +138,13 @@ const Header = () => {
             className={`relative ml-auto  flex flex-col items-center gap-4 bg-red-900 p-2 text-sm text-white transition duration-500 md:hidden   `}
           >
             <li
-              className="w-full border-b border-red-800 pb-2 text-center"
+              className={`w-full border-b border-red-800 pb-2 text-center ${userOption}`}
               onClick={() => closeMenu()}
             >
               {searchUsers}
             </li>
             <li
-              className="w-full border-b border-red-800 pb-2 text-center"
+              className={`w-full border-b border-red-800 pb-2 text-center ${userOption}`}
               onClick={() => closeMenu()}
             >
               {activeTeams}
@@ -160,7 +161,9 @@ const Header = () => {
             >
               {loginButton}
             </li>
-            <li onClick={() => closeMenu()}>{settingsButton}</li>
+            <li className={`${userOption}`} onClick={() => closeMenu()}>
+              {settingsButton}
+            </li>
           </ul>
         </div>
       </div>
