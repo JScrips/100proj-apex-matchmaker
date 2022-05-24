@@ -257,3 +257,64 @@ const Search = () => {
 }
 
 export default Search
+
+export const handleSearch = async () => {
+  const userRef = collection(db, 'users')
+
+  const userQuery = query(
+    userRef,
+    where('status', '==', status),
+    where('currentChamp', '==', champ),
+    where('tier', '==', tier),
+    where('mode', '==', mode)
+  )
+  const querySnapshot = await getDocs(userQuery)
+  const users = []
+  querySnapshot.forEach((doc) => {
+    users.push(doc.data())
+  })
+
+  const defaultQuery = query(userRef)
+  const defaultSnapshot = await getDocs(defaultQuery)
+  const fallback = []
+  defaultSnapshot.forEach((doc) => {
+    fallback.push(doc.data())
+  })
+
+  const manualQuery = query(userRef, where('displayName', '==', manualInput))
+  const manualSnapshot = await getDocs(manualQuery)
+  manualSnapshot.forEach((doc) => {
+    users.push(doc.data())
+  })
+
+  const statusQuery = query(userRef, where('status', '==', status))
+  const statusSnapshot = await getDocs(statusQuery)
+  statusSnapshot.forEach((doc) => {
+    users.push(doc.data())
+  })
+
+  const champQuery = query(userRef, where('currentChamp', '==', champ))
+  const champSnapshot = await getDocs(champQuery)
+  champSnapshot.forEach((doc) => {
+    users.push(doc.data())
+  })
+
+  const tierQuery = query(userRef, where('tier', '==', tier))
+  const tierSnapshot = await getDocs(tierQuery)
+  tierSnapshot.forEach((doc) => {
+    users.push(doc.data())
+  })
+
+  const modeQuery = query(userRef, where('mode', '==', mode))
+  const modeSnapshot = await getDocs(modeQuery)
+  modeSnapshot.forEach((doc) => {
+    users.push(doc.data())
+  })
+
+  if (users.length === 0) {
+    alert('No users found with those params')
+    setUsers(fallback)
+  } else if (users.length >= 1) {
+    setUsers(users)
+  }
+}

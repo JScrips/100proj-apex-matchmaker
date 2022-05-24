@@ -1,12 +1,7 @@
-import React from 'react'
-import userCard from '../components/userCard'
+import UserSearch from '../components/UserSearch'
 
 const Lab = () => {
-  return (
-    <div>
-      <userCard />
-    </div>
-  )
+  return <UserSearch />
 }
 
 export default Lab

@@ -87,7 +87,7 @@ const ActiveTeams = () => {
             : 'inline-block'
           teams.push(
             <div
-              className="flex items-center justify-around bg-red-600 p-4"
+              className="flex items-center justify-around bg-red-600 p-4 text-[12px]"
               key={doc.id}
             >
               <h2>{doc.data().Room.owner}'s Room</h2>
@@ -112,7 +112,7 @@ const ActiveTeams = () => {
                   onClick={() => leaveTeam(doc)}
                 >
                   {' '}
-                  Leave Team{' '}
+                  Leave{' '}
                 </button>
               </div>
             </div>
@@ -125,15 +125,14 @@ const ActiveTeams = () => {
   }, [])
 
   return (
-    <div>
+    <div className=" min-h-screen p-2">
       <button
-        className="mb-2 bg-red-600 p-2 text-white"
+        className="mx-auto mb-2 flex justify-center bg-red-600 p-2 text-white"
         onClick={() => createTeam()}
       >
         {' '}
         Create a Team{' '}
       </button>
-
       <div className="text-white">{teams}</div>
     </div>
   )

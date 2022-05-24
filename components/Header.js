@@ -6,10 +6,12 @@ import { HiCog } from 'react-icons/hi'
 import Image from 'next/image'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 const Header = () => {
   const { user } = AuthFunctions()
   const [isOpen, setIsOpen] = useState(true)
+
   /* =================Conditional Renders===================== */
   const welcome = user ? ` ${user.displayName}` : ` Guest`
 
