@@ -1,10 +1,10 @@
 import React from 'react'
-import SignUpComponent from '../components/SignUpComponent'
+import userCard from '../components/userCard'
 
 const Lab = () => {
   return (
     <div>
-      <SignUpComponent />
+      <userCard />
     </div>
   )
 }
