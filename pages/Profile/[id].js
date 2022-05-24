@@ -205,17 +205,31 @@ const Profile = ({ userData }) => {
                       <span className="mb-8 text-[20px]">
                         {comment.comment}
                       </span>
-                      <div className="flex items-center gap-6">
-                        <span className="text-[12px]">By: {comment.by}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-[8px]">{comment.date}</span>
-                        <LikeButtons
-                          id={comment.id}
-                          likes={comment.likes}
-                          dislikes={comment.dislikes}
-                          name={userData.displayName}
+                      <div className="flex items-center gap-4">
+                        <Image
+                          src={comment.profilePic}
+                          width={30}
+                          height={30}
+                          className="rounded-full"
+                          objectFit="cover"
                         />
+
+                        <div className="flex flex-col">
+                          <div className="flex items-center gap-6">
+                            <span className="text-[12px]">
+                              By: {comment.by}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-[8px]">{comment.date}</span>
+                            <LikeButtons
+                              id={comment.id}
+                              likes={comment.likes}
+                              dislikes={comment.dislikes}
+                              name={userData.displayName}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )

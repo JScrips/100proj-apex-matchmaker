@@ -76,6 +76,7 @@ const SignInComponent = () => {
                     placeholder="e.g apex@royale.com"
                     onChange={(e) => setEmail(e.target.value)}
                     required
+                    autofill="email"
                   />
                   <span className="absolute top-0 left-0 ml-4 -mt-2 inline-block  rounded-xl bg-white px-1 text-xs font-medium text-red-800">
                     E-Mail
