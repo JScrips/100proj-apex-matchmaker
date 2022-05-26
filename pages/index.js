@@ -2,6 +2,7 @@ import LogoutButton from '../components/LogoutButton'
 import { AuthFunctions } from '../src/AuthContext'
 import Link from 'next/link'
 import Image from 'next/image'
+
 const index = () => {
   const { user } = AuthFunctions()
   const endpoint = user ? `/Profile/${user.displayName}` : '/SignUp'
