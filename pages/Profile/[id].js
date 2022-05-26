@@ -396,7 +396,12 @@ const Profile = ({ userData }) => {
 
                             <div className="flex flex-col">
                               <div className="flex items-center gap-6">
-                                <span className="text-[12px]">
+                                <span
+                                  className="text-[12px] hover:cursor-pointer hover:text-red-800"
+                                  onClick={() => {
+                                    handleNavigate(comment.by)
+                                  }}
+                                >
                                   By: {comment.by}
                                 </span>
                               </div>
@@ -594,7 +599,14 @@ const Profile = ({ userData }) => {
 
                           <div className="flex flex-col">
                             <div className="flex items-center gap-6 font-medium">
-                              <span className="text-[12px]">{comment.by}</span>
+                              <span
+                                className="text-[12px] hover:cursor-pointer hover:text-red-800"
+                                onClick={() => {
+                                  handleNavigate(comment.by)
+                                }}
+                              >
+                                {comment.by}
+                              </span>
                             </div>
                             <div className="flex gap-64">
                               <span className="text-[8px] font-medium">

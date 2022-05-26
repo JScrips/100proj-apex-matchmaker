@@ -16,11 +16,14 @@ import {
 import { async } from '@firebase/util'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const ActiveTeams = () => {
   const [teams, setTeams] = useState('')
 
   const { user } = AuthFunctions()
+
+  const router = useRouter()
 
   const createTeam = async () => {
     const userRef = collection(db, 'users')
@@ -116,9 +119,30 @@ const ActiveTeams = () => {
               <h2>{doc.data().Room.owner}'s Room</h2>
               <div className="flex gap-3 border-l border-r pr-2 pl-2">
                 {' '}
-                <span className="flex">{doc.data().Room.players[0]}</span>{' '}
-                <span className="flex">{doc.data().Room.players[1]}</span>{' '}
-                <span className="flex">{doc.data().Room.players[2]}</span>
+                <span
+                  className="flex hover:cursor-pointer hover:text-black"
+                  onClick={() => {
+                    handleNavigate(player1)
+                  }}
+                >
+                  {doc.data().Room.players[0]}
+                </span>{' '}
+                <span
+                  className="flex hover:cursor-pointer hover:text-black"
+                  onClick={() => {
+                    handleNavigate(player2)
+                  }}
+                >
+                  {doc.data().Room.players[1]}
+                </span>{' '}
+                <span
+                  className="flex hover:cursor-pointer hover:text-black"
+                  onClick={() => {
+                    handleNavigate(player3)
+                  }}
+                >
+                  {doc.data().Room.players[2]}
+                </span>
               </div>
               <h3>
                 {doc.data().Room.players.length}/{doc.data().Room.maxSize}
@@ -148,6 +172,10 @@ const ActiveTeams = () => {
     }
     showTeams()
   }, [])
+
+  const handleNavigate = (player) => {
+    router.push(`/Profile/${player}`)
+  }
 
   return (
     <div className=" min-h-screen p-2">
