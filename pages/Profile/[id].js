@@ -333,7 +333,7 @@ const Profile = ({ userData }) => {
               <div className="flex justify-center gap-4 text-xs">
                 <select
                   name="filterComments"
-                  className="w-14 bg-zinc-900 text-[2px] text-white"
+                  className="w-14 bg-zinc-900 text-[14px] text-white"
                   onChange={(e) => setFilterBy(e.target.value)}
                 >
                   <option value={`likes`}>Likes</option>

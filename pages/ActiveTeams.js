@@ -31,29 +31,45 @@ const ActiveTeams = () => {
         size: 1,
         maxSize: 3,
       },
+      inParty: true,
     })
   }
 
   const joinTeam = async (info) => {
-    console.log(info.data().Room.players)
-    if (info.data().Room.players.length < info.data().Room.maxSize) {
-      const userRef = collection(db, 'users')
-      const partyLocation = doc(userRef, info.id)
-      await updateDoc(partyLocation, {
-        Room: {
-          ...info.data().Room,
-          players: [...info.data().Room.players, user.displayName],
-          size: info.data().Room.players.length + 1,
-        },
-      })
+    const userRef = collection(db, 'users')
+    const specificUser = doc(userRef, user.displayName)
+    const userInfo = await getDoc(specificUser)
+    const inParty = userInfo.data().inParty
+    if (inParty) {
+      alert('You are already in a party!')
     } else {
-      alert('team is full')
+      if (info.data().Room.players.length < info.data().Room.maxSize) {
+        const userRef = collection(db, 'users')
+        const partyLocation = doc(userRef, info.id)
+        const specificUser = doc(userRef, user.displayName)
+        await updateDoc(specificUser, {
+          inParty: true,
+        })
+        await updateDoc(partyLocation, {
+          Room: {
+            ...info.data().Room,
+            players: [...info.data().Room.players, user.displayName],
+            size: info.data().Room.players.length + 1,
+          },
+        })
+      } else {
+        alert('team is full')
+      }
     }
   }
 
   const leaveTeam = async (info) => {
     const userRef = collection(db, 'users')
     const partyLocation = doc(userRef, info.id)
+    const specificUser = doc(userRef, user.displayName)
+    await updateDoc(specificUser, {
+      inParty: false,
+    })
     await updateDoc(partyLocation, {
       Room: {
         ...info.data().Room,
@@ -74,7 +90,7 @@ const ActiveTeams = () => {
 
   useEffect((e) => {
     const showTeams = async () => {
-      const q = query(collection(db, 'users'), where('Room.size', '<', 3))
+      const q = query(collection(db, 'users'), where('Room.size', '<=', 3))
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const teams = []
         querySnapshot.forEach((doc) => {
@@ -85,9 +101,12 @@ const ActiveTeams = () => {
           const hideButton = currentPlayers.includes(user.displayName)
             ? 'hidden'
             : 'inline-block'
+          const fullTeam =
+            currentPlayers.length === 3 ? 'bg-red-800' : 'bg-green-800'
+          const fullDisplay = currentPlayers.length === 3 ? 'full' : ''
           teams.push(
             <div
-              className="flex items-center justify-around bg-red-600 p-4 text-[12px]"
+              className={`flex items-center justify-around ${fullTeam} border-2 border-zinc-800 p-4 text-[12px]`}
               key={doc.id}
             >
               <h2>{doc.data().Room.owner}'s Room</h2>
@@ -115,6 +134,7 @@ const ActiveTeams = () => {
                   Leave{' '}
                 </button>
               </div>
+              <span className="text-lg font-medium"> {fullDisplay} </span>
             </div>
           )
         })
