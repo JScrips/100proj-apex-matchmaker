@@ -323,10 +323,22 @@ const Profile = ({ userData }) => {
               {' '}
               {showRatingFull}{' '}
             </div>
-            <span className="mb-4 text-center text-3xl font-medium text-red-800">
-              {' '}
-              {ratingNumber} Star Challenger{' '}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="mb-4 text-center text-3xl font-medium text-red-800">
+                {' '}
+                {ratingNumber} Star Challenger{' '}
+              </span>
+              <span className=" text-[12px] font-medium text-red-800">
+                {' '}
+                (
+                {
+                  userData.rating.filter((num) => typeof num === 'number')
+                    .length
+                }{' '}
+                votes)
+              </span>
+            </div>
+
             <div className=" overflow-auto rounded-xl bg-neutral-700 p-2 shadow-lg shadow-neutral-900">
               <h1 className="text-center text-2xl font-medium text-white">
                 Reviews
@@ -508,9 +520,20 @@ const Profile = ({ userData }) => {
             <div className=" w-full overflow-auto rounded-xl bg-zinc-800 shadow-lg shadow-neutral-900">
               <div className="flex flex-col items-center justify-center">
                 <div className="flex text-7xl">{showRatingFull}</div>
-                <span className="text-center font-medium text-white">
-                  {ratingNumberFloat} Stars
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className=" text-center font-medium text-white">
+                    {ratingNumberFloat} Stars{' '}
+                  </span>
+                  <span className=" text-[12px] text-white">
+                    {' '}
+                    (
+                    {
+                      userData.rating.filter((num) => typeof num === 'number')
+                        .length
+                    }{' '}
+                    votes)
+                  </span>
+                </div>
               </div>
               <h1 className="text-center text-2xl font-medium text-white">
                 Reviews
