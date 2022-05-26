@@ -15,6 +15,7 @@ import {
 } from 'firebase/firestore'
 import { async } from '@firebase/util'
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 
 const ActiveTeams = () => {
   const [teams, setTeams] = useState('')
@@ -104,6 +105,9 @@ const ActiveTeams = () => {
           const fullTeam =
             currentPlayers.length === 3 ? 'bg-red-800' : 'bg-green-800'
           const fullDisplay = currentPlayers.length === 3 ? 'full' : ''
+          const player1 = currentPlayers[0] ? currentPlayers[0] : ''
+          const player2 = currentPlayers[1] ? currentPlayers[1] : ''
+          const player3 = currentPlayers[2] ? currentPlayers[2] : ''
           teams.push(
             <div
               className={`flex items-center justify-around ${fullTeam} border-2 border-zinc-800 p-4 text-[12px]`}
@@ -111,8 +115,9 @@ const ActiveTeams = () => {
             >
               <h2>{doc.data().Room.owner}'s Room</h2>
               <div className="flex gap-3 border-l border-r pr-2 pl-2">
-                <span className="flex">{doc.data().Room.players[0]}</span>
-                <span className="flex">{doc.data().Room.players[1]}</span>
+                {' '}
+                <span className="flex">{doc.data().Room.players[0]}</span>{' '}
+                <span className="flex">{doc.data().Room.players[1]}</span>{' '}
                 <span className="flex">{doc.data().Room.players[2]}</span>
               </div>
               <h3>
@@ -153,7 +158,15 @@ const ActiveTeams = () => {
         {' '}
         Create a Team{' '}
       </button>
-      <div className="text-white">{teams}</div>
+      <article className="mx-auto flex w-6/12 flex-col justify-center bg-zinc-800 p-4 text-white">
+        <span> How This Works:</span>{' '}
+        <span>
+          {' '}
+          Create a team, wait for users to join, add each other ingame,
+          Dominate, Leave reviews of the players.{' '}
+        </span>
+      </article>
+      <div className="pt-6 font-medium text-white">{teams}</div>
     </div>
   )
 }
