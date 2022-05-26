@@ -143,7 +143,9 @@ const Profile = ({ userData }) => {
   }, [filterBy])
 
   const showRating = (info) => {
-    let rating = info.reduce((a, b) => a + b, 0) / info.length
+    let rating =
+      info.filter((num) => typeof num === 'number').reduce((a, b) => a + b, 0) /
+      info.filter((num) => typeof num === 'number').length
 
     if (rating === 1) {
       return <BsStarFill className="text-red-800" size="1.3em" />
