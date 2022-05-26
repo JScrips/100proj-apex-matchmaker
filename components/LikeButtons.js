@@ -25,18 +25,15 @@ const LikeButtons = ({ name, likes, dislikes, id }) => {
       updateDoc(doc(commentRef, id), {
         likes: arrayUnion(user.uid),
       })
-      console.log('liked')
     } else if (dislikes?.includes(user.uid)) {
       updateDoc(doc(commentRef, id), {
         likes: arrayUnion(user.uid),
         dislikes: arrayRemove(user.uid),
       })
-      console.log('unliked')
     } else {
       updateDoc(doc(commentRef, id), {
         likes: arrayRemove(user.uid),
       })
-      console.log('disliked')
     }
   }
 
@@ -46,23 +43,19 @@ const LikeButtons = ({ name, likes, dislikes, id }) => {
       updateDoc(doc(commentRef, id), {
         dislikes: arrayUnion(user.uid),
       })
-      console.log('disliked')
     } else if (likes?.includes(user.uid)) {
       updateDoc(doc(commentRef, id), {
         dislikes: arrayUnion(user.uid),
         likes: arrayRemove(user.uid),
       })
-      console.log('unliked')
     } else {
       updateDoc(doc(commentRef, id), {
         dislikes: arrayRemove(user.uid),
       })
-      console.log('undisliked')
     }
   }
 
   const unsub = onSnapshot(doc(commentRef, id), (docSnapshot) => {
-    console.log(docSnapshot.data().likes)
     if (docSnapshot.exists && docSnapshot.data().likes !== undefined) {
       setLikeCount(docSnapshot.data().likes.length)
     } else {

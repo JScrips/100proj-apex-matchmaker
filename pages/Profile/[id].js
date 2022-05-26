@@ -12,6 +12,8 @@ import {
   orderBy,
   deleteDoc,
   getDoc,
+  updateDoc,
+  arrayUnion,
 } from 'firebase/firestore'
 import { db } from '../../firebase-config'
 import Image from 'next/image'
@@ -26,38 +28,75 @@ import OnlineStatus from '../../components/OnlineStatus'
 import CurrentlyPlaying from '../../components/CurrentlyPlaying'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { BsStarFill, BsStarHalf } from 'react-icons/bs'
 
 const Profile = ({ userData }) => {
   const { user } = AuthFunctions()
   const [comment, setComment] = useState('')
   const [commentList, setCommentList] = useState([])
   const [filterBy, setFilterBy] = useState('date')
+  const [commentRating, setCommentRating] = useState()
   const router = useRouter()
 
   const q = query(collection(db, `users/${userData.displayName}/profComments`))
-  console.log(user.photoURL)
+
   /* ==========================Functions================================ */
-  const handleComment = async (e) => {
+  const handleComment = async (e, comment, commentRating) => {
+    const commentRef = collection(
+      db,
+      `users/${userData.displayName}/profComments`
+    )
+    const userRef = collection(db, 'users')
+    const specificUser = doc(userRef, userData.displayName)
+    const specificUserInfo = await getDoc(specificUser)
+
     e.preventDefault()
-    try {
-      const commentRef = collection(
-        db,
-        `users/${userData.displayName}/profComments`
-      )
-      await addDoc(commentRef, {
-        comment: comment,
-        likes: [user.uid],
-        dislikes: [],
-        date: Date()
-          .toLocaleString('en-US', { timeZone: 'America/Texas' })
-          .slice(0, 24),
-        by: user.displayName,
-        profilePic: user.photoURL,
-      })
-      console.log(document, 'was added to the collection')
-      setComment('')
-    } catch (err) {
-      console.log(err.message)
+    const raters = specificUserInfo.data().raters
+    if (raters.includes(user.displayName)) {
+      commentRating = ''
+      alert('You have already rated this user!')
+
+      try {
+        await updateDoc(specificUser, {
+          rating: arrayUnion(Number(commentRating)),
+          raters: arrayUnion(user.displayName),
+        })
+        await addDoc(commentRef, {
+          comment: comment,
+          likes: [user.uid],
+          dislikes: [],
+          date: Date()
+            .toLocaleString('en-US', { timeZone: 'America/Texas' })
+            .slice(0, 24),
+          by: user.displayName,
+          profilePic: user.photoURL,
+          rating: commentRating,
+        })
+        setComment('')
+      } catch (err) {
+        console.log(err.message)
+      }
+    } else {
+      try {
+        await updateDoc(specificUser, {
+          rating: arrayUnion(Number(commentRating)),
+          raters: arrayUnion(user.displayName),
+        })
+        await addDoc(commentRef, {
+          comment: comment,
+          likes: [user.uid],
+          dislikes: [],
+          date: Date()
+            .toLocaleString('en-US', { timeZone: 'America/Texas' })
+            .slice(0, 24),
+          by: user.displayName,
+          profilePic: user.photoURL,
+          rating: commentRating,
+        })
+        setComment('')
+      } catch (err) {
+        console.log(err.message)
+      }
     }
   }
 
@@ -94,10 +133,118 @@ const Profile = ({ userData }) => {
     getLiveComments()
   }, [filterBy])
 
+  const showRating = (info) => {
+    let rating = info.reduce((a, b) => a + b, 0) / info.length
+
+    if (rating === 1) {
+      return <BsStarFill className="text-red-800" size="1.3em" />
+    } else if (rating > 1 && rating < 2) {
+      return (
+        <div className="flex">
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarHalf className="text-red-800" size="1.3em" />
+        </div>
+      )
+    } else if (rating === 2) {
+      return (
+        <div className="flex">
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+        </div>
+      )
+    } else if (rating > 2 && rating < 3) {
+      return (
+        <div className="flex">
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarHalf className="text-red-800" size="1.3em" />
+        </div>
+      )
+    } else if (rating === 3) {
+      return (
+        <div className="flex">
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+        </div>
+      )
+    } else if (rating > 3 && rating < 4) {
+      return (
+        <div className="flex">
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarHalf className="text-red-800" size="1.3em" />
+        </div>
+      )
+    } else if (rating === 4) {
+      return (
+        <div className="flex">
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+        </div>
+      )
+    } else if (rating > 4 && rating < 5) {
+      return (
+        <div className="flex gap-2">
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarHalf className="text-red-800" size="1.3em" />
+        </div>
+      )
+    } else if (rating === 5) {
+      return (
+        <div className="flex gap-2">
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+          <BsStarFill className="text-red-800" size="1.3em" />
+        </div>
+      )
+    }
+  }
+
+  const showRateOption = async () => {
+    const userRef = collection(db, 'users')
+    const specificUser = doc(userRef, userData.displayName)
+    const specificUserInfo = await getDoc(specificUser)
+
+    const raters = specificUserInfo.data().raters
+    if (raters.includes(user.displayName)) {
+      return 'hidden'
+    } else {
+      return 'block'
+    }
+  }
+
   /* ==========================Conditional Rendering================================ */
   const profilePic = userData.profilePic ? userData.ProfilePic : '/apexLogo.png'
   const photoURL =
     user && userData.photoURL ? userData.photoURL : '/apexLogo.png'
+
+  const showRatingFull = userData.rating ? showRating(userData.rating) : ''
+  const ratingNumber =
+    userData.rating.reduce((a, b) => a + b, 0) / userData.rating.length
+  const ratingNumberFloat = Math.round(ratingNumber * 10) / 10
+
+  const ownProfile =
+    userData.displayName === user.displayName ? 'hidden' : 'block'
+
+  console.log(user.displayName)
+  console.log(userData.raters.includes(user.displayName))
+
+  const showRateOptions = userData.raters.includes(user.displayName)
+    ? 'hidden'
+    : 'block'
+
+  const alreadyRated = userData.raters.includes(user.displayName)
+    ? 'You have already rated this player'
+    : ''
 
   return (
     <ProtectedRoute>
@@ -327,6 +474,12 @@ const Profile = ({ userData }) => {
           </article>
           <article id="RightSide" className="flex  w-4/12 flex-col  rounded-xl">
             <div className=" w-full overflow-auto rounded-xl bg-zinc-800 shadow-lg shadow-neutral-900">
+              <div className="flex flex-col items-center justify-center">
+                <div className="flex text-7xl">{showRatingFull}</div>
+                <span className="text-center font-medium text-white">
+                  {ratingNumberFloat} Stars
+                </span>
+              </div>
               <h1 className="text-center text-2xl font-medium text-white">
                 Reviews
               </h1>
@@ -345,6 +498,7 @@ const Profile = ({ userData }) => {
                 {commentList.map((comment) => {
                   const deleteButton =
                     comment.by === user.displayName ? 'block' : 'hidden'
+
                   return (
                     <div
                       key={comment.id}
@@ -359,31 +513,41 @@ const Profile = ({ userData }) => {
                       <span className="mb-8 border-b border-white border-opacity-10 pb-20 text-[14px]">
                         {comment.comment}
                       </span>
-                      <div className="flex items-center justify-between gap-2">
-                        <Image
-                          src={comment.profilePic}
-                          height={70}
-                          width={70}
-                          className="rounded-full"
-                          objectFit="cover"
-                          onClick={() => {
-                            handleNavigate(comment.by)
-                          }}
-                        />
+                      <div className="flex flex-col">
+                        <div className="flex items-center justify-between gap-2">
+                          <Image
+                            src={comment.profilePic}
+                            height={70}
+                            width={70}
+                            className="rounded-full"
+                            objectFit="cover"
+                            onClick={() => {
+                              handleNavigate(comment.by)
+                            }}
+                          />
 
-                        <div className="flex flex-col">
-                          <div className="flex items-center gap-6 ">
-                            <span className="text-[2px]">By: {comment.by}</span>
+                          <div className="flex flex-col">
+                            <div className="flex items-center gap-6 ">
+                              <span className="text-[2px]">
+                                By: {comment.by}
+                              </span>
+                            </div>
+                            <div className="flex gap-64">
+                              <span className="text-[1px]">{comment.date}</span>
+
+                              <LikeButtons
+                                id={comment.id}
+                                likes={comment.likes}
+                                dislikes={comment.dislikes}
+                                name={userData.displayName}
+                              />
+                            </div>
                           </div>
-                          <div className="flex gap-64">
-                            <span className="text-[1px]">{comment.date}</span>
-                            <LikeButtons
-                              id={comment.id}
-                              likes={comment.likes}
-                              dislikes={comment.dislikes}
-                              name={userData.displayName}
-                            />
-                          </div>
+                        </div>
+                        <div className="flex justify-center">
+                          {comment.rating
+                            ? `Rated ${comment.rating} Stars`
+                            : 'Did not rate'}
                         </div>
                       </div>
                     </div>
@@ -401,8 +565,21 @@ const Profile = ({ userData }) => {
               >
                 {' '}
               </textarea>
+              <select
+                className={`mx-auto mt-4 w-3/12 ${showRateOptions} `}
+                onChange={(e) => setCommentRating(e.target.value)}
+              >
+                <option> Rating </option>
+                <option value={5}> 5 </option>
+                <option value={4}> 4 </option>
+                <option value={3}> 3 </option>
+                <option value={2}> 2 </option>
+                <option value={1}> 1 </option>
+              </select>
+              <span className="text-center text-white">{alreadyRated}</span>
+
               <button
-                onClick={handleComment}
+                onClick={(e) => handleComment(e, comment, commentRating)}
                 className="mx-auto mt-4  rounded bg-red-900 p-2 font-bold text-white hover:bg-red-700"
               >
                 Comment
