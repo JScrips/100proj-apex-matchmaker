@@ -45,6 +45,7 @@ const Profile = ({ userData }) => {
     e.preventDefault()
 
     try {
+      const roadFork = commentRating === undefined ? true : false
       const commentRef = collection(
         db,
         `users/${userData.displayName}/profComments`
@@ -55,7 +56,7 @@ const Profile = ({ userData }) => {
 
       const raters = specificUserInfo.data().raters
 
-      if (commentRating) {
+      if (!roadFork && !raters.includes(user.displayName)) {
         try {
           await updateDoc(specificUser, {
             rating: arrayUnion(Number(commentRating)),
@@ -73,11 +74,12 @@ const Profile = ({ userData }) => {
             profilePic: user.photoURL,
             rating: commentRating,
           })
-
-          setComment('')
         } catch (err) {
           console.log(err.message)
         }
+      } else if (!roadFork && raters.includes(user.displayName)) {
+        alert('why are you trying to break my app?')
+        router.reload()
       } else {
         await addDoc(commentRef, {
           comment: comment,
@@ -89,20 +91,9 @@ const Profile = ({ userData }) => {
           by: user.displayName,
           profilePic: user.photoURL,
         })
-        setComment('')
       }
 
-      await addDoc(commentRef, {
-        comment: comment,
-        likes: [user.uid],
-        dislikes: [],
-        date: Date()
-          .toLocaleString('en-US', { timeZone: 'America/Texas' })
-          .slice(0, 24),
-        by: user.displayName,
-        profilePic: user.photoURL,
-        rating: commentRating,
-      })
+      setCommentRating('')
       setComment('')
     } catch (err) {
       console.log(err.message)
@@ -657,7 +648,7 @@ const Profile = ({ userData }) => {
               <span className="text-center text-white">{alreadyRated}</span>
 
               <button
-                onClick={(e) => handleComment(e, comment)}
+                onClick={(e) => handleComment(e, comment, commentRating)}
                 className="mx-auto mt-4  rounded bg-red-900 p-2 font-bold text-white hover:bg-red-700"
               >
                 Comment
