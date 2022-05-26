@@ -20,6 +20,7 @@ import { useRouter } from 'next/router'
 
 const ActiveTeams = () => {
   const [teams, setTeams] = useState('')
+  const [fullTeam, setFullTeam] = useState('block')
 
   const { user } = AuthFunctions()
 
@@ -27,16 +28,24 @@ const ActiveTeams = () => {
 
   const createTeam = async () => {
     const userRef = collection(db, 'users')
+    const specificUser = doc(userRef, user.displayName)
+    const userInfo = await getDoc(specificUser)
+    const inParty = userInfo.data().inParty
     const partyLocation = doc(userRef, user.displayName)
-    await updateDoc(partyLocation, {
-      Room: {
-        owner: user.displayName,
-        players: [user.displayName],
-        size: 1,
-        maxSize: 3,
-      },
-      inParty: true,
-    })
+
+    if (inParty === true) {
+      alert('You are already in a party')
+    } else {
+      await updateDoc(partyLocation, {
+        Room: {
+          owner: user.displayName,
+          players: [user.displayName],
+          size: 1,
+          maxSize: 3,
+        },
+        inParty: true,
+      })
+    }
   }
 
   const joinTeam = async (info) => {
@@ -83,9 +92,8 @@ const ActiveTeams = () => {
         size: info.data().Room.players.length - 1,
       },
     })
-    console.log(info.data().Room.players.length)
+
     if (info.data().Room.players.length - 1 === 0) {
-      console.log('This room should be deleted')
       await updateDoc(partyLocation, {
         Room: deleteField(),
       })
@@ -102,15 +110,18 @@ const ActiveTeams = () => {
           const showButton = currentPlayers.includes(user.displayName)
             ? 'inline-block'
             : 'hidden'
-          const hideButton = currentPlayers.includes(user.displayName)
-            ? 'hidden'
-            : 'inline-block'
+          const hideButton =
+            currentPlayers.includes(user.displayName) ||
+            currentPlayers.length === 3
+              ? 'hidden'
+              : 'inline-block'
           const fullTeam =
             currentPlayers.length === 3 ? 'bg-red-800' : 'bg-green-800'
           const fullDisplay = currentPlayers.length === 3 ? 'full' : ''
           const player1 = currentPlayers[0] ? currentPlayers[0] : ''
           const player2 = currentPlayers[1] ? currentPlayers[1] : ''
           const player3 = currentPlayers[2] ? currentPlayers[2] : ''
+          const hideJoin = currentPlayers.length === 3 ? 'hidden' : 'block'
           teams.push(
             <div
               className={`flex items-center justify-around ${fullTeam} border-2 border-zinc-800 p-4 text-[12px]`}
@@ -190,7 +201,7 @@ const ActiveTeams = () => {
         <span> How This Works:</span>{' '}
         <span>
           {' '}
-          Create a team, wait for users to join, add each other ingame,
+          Create a team, wait for users to join, add each other in-game,
           Dominate, Leave reviews of the players.{' '}
         </span>
       </article>
