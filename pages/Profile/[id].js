@@ -229,7 +229,10 @@ const Profile = ({ userData }) => {
 
   const showRatingFull = userData.rating ? showRating(userData.rating) : ''
   const ratingNumber =
-    userData.rating.reduce((a, b) => a + b, 0) / userData.rating.length
+    userData.rating
+      .filter((num) => typeof num === 'number')
+      .reduce((a, b) => a + b, 0) /
+    userData.rating.filter((num) => typeof num === 'number').length
   const ratingNumberFloat = Math.round(ratingNumber * 10) / 10
 
   const ownProfile =

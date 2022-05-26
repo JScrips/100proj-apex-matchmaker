@@ -45,7 +45,7 @@ const SignUpComponent = () => {
             photoURL: '/apexLogo.png',
             playstyle: [],
             status: 'Online',
-            rating: [],
+            rating: [5],
             raters: [],
           })
           router.push('/')
