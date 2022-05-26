@@ -591,13 +591,13 @@ const Profile = ({ userData }) => {
                           />
 
                           <div className="flex flex-col">
-                            <div className="flex items-center gap-6 ">
-                              <span className="text-[2px]">
-                                By: {comment.by}
-                              </span>
+                            <div className="flex items-center gap-6 font-medium">
+                              <span className="text-[12px]">{comment.by}</span>
                             </div>
                             <div className="flex gap-64">
-                              <span className="text-[1px]">{comment.date}</span>
+                              <span className="text-[8px] font-medium">
+                                {comment.date}
+                              </span>
 
                               <LikeButtons
                                 id={comment.id}
