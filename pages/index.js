@@ -51,7 +51,7 @@ const index = () => {
             layout=""
           />
         </div>
-        <div className="inset-30 absolute z-10 mx-auto mb-16 flex max-w-2xl flex-col flex-col items-center justify-center text-center">
+        <div className="inset-30 absolute z-10 mx-auto mb-16 flex max-w-2xl  flex-col items-center justify-center text-center">
           <span className="font-heading text-4xl font-bold text-white lg:text-5xl">
             Matchmake.
           </span>
