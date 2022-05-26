@@ -42,25 +42,43 @@ const Profile = ({ userData }) => {
 
   /* ==========================Functions================================ */
   const handleComment = async (e, comment, commentRating) => {
-    const commentRef = collection(
-      db,
-      `users/${userData.displayName}/profComments`
-    )
-    const userRef = collection(db, 'users')
-    const specificUser = doc(userRef, userData.displayName)
-    const specificUserInfo = await getDoc(specificUser)
-
     e.preventDefault()
-    const raters = specificUserInfo.data().raters
-    if (raters.includes(user.displayName)) {
-      commentRating = ''
-      alert('You have already rated this user!')
 
-      try {
-        await updateDoc(specificUser, {
-          rating: arrayUnion(Number(commentRating)),
-          raters: arrayUnion(user.displayName),
-        })
+    try {
+      const commentRef = collection(
+        db,
+        `users/${userData.displayName}/profComments`
+      )
+      const userRef = collection(db, 'users')
+      const specificUser = doc(userRef, userData.displayName)
+      const specificUserInfo = await getDoc(specificUser)
+
+      const raters = specificUserInfo.data().raters
+
+      if (commentRating) {
+        try {
+          await updateDoc(specificUser, {
+            rating: arrayUnion(Number(commentRating)),
+            raters: arrayUnion(user.displayName),
+          })
+
+          await addDoc(commentRef, {
+            comment: comment,
+            likes: [user.uid],
+            dislikes: [],
+            date: Date()
+              .toLocaleString('en-US', { timeZone: 'America/Texas' })
+              .slice(0, 24),
+            by: user.displayName,
+            profilePic: user.photoURL,
+            rating: commentRating,
+          })
+
+          setComment('')
+        } catch (err) {
+          console.log(err.message)
+        }
+      } else {
         await addDoc(commentRef, {
           comment: comment,
           likes: [user.uid],
@@ -70,33 +88,24 @@ const Profile = ({ userData }) => {
             .slice(0, 24),
           by: user.displayName,
           profilePic: user.photoURL,
-          rating: commentRating,
         })
         setComment('')
-      } catch (err) {
-        console.log(err.message)
       }
-    } else {
-      try {
-        await updateDoc(specificUser, {
-          rating: arrayUnion(Number(commentRating)),
-          raters: arrayUnion(user.displayName),
-        })
-        await addDoc(commentRef, {
-          comment: comment,
-          likes: [user.uid],
-          dislikes: [],
-          date: Date()
-            .toLocaleString('en-US', { timeZone: 'America/Texas' })
-            .slice(0, 24),
-          by: user.displayName,
-          profilePic: user.photoURL,
-          rating: commentRating,
-        })
-        setComment('')
-      } catch (err) {
-        console.log(err.message)
-      }
+
+      await addDoc(commentRef, {
+        comment: comment,
+        likes: [user.uid],
+        dislikes: [],
+        date: Date()
+          .toLocaleString('en-US', { timeZone: 'America/Texas' })
+          .slice(0, 24),
+        by: user.displayName,
+        profilePic: user.photoURL,
+        rating: commentRating,
+      })
+      setComment('')
+    } catch (err) {
+      console.log(err.message)
     }
   }
 
@@ -406,7 +415,7 @@ const Profile = ({ userData }) => {
                         <div className="mt-4 flex justify-center text-[12px]">
                           {comment.rating
                             ? `Rated ${comment.rating} Stars`
-                            : 'Did not rate'}
+                            : ''}
                         </div>
                       </div>
                     </div>
@@ -602,7 +611,7 @@ const Profile = ({ userData }) => {
                         <div className="flex justify-center">
                           {comment.rating
                             ? `Rated ${comment.rating} Stars`
-                            : 'Did not rate'}
+                            : ''}
                         </div>
                       </div>
                     </div>
@@ -634,7 +643,7 @@ const Profile = ({ userData }) => {
               <span className="text-center text-white">{alreadyRated}</span>
 
               <button
-                onClick={(e) => handleComment(e, comment, commentRating)}
+                onClick={(e) => handleComment(e, comment)}
                 className="mx-auto mt-4  rounded bg-red-900 p-2 font-bold text-white hover:bg-red-700"
               >
                 Comment
