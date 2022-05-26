@@ -158,7 +158,7 @@ const ActiveTeams = () => {
         {' '}
         Create a Team{' '}
       </button>
-      <article className="mx-auto flex w-6/12 flex-col justify-center bg-zinc-800 p-4 text-white">
+      <article className="mx-auto flex flex-col justify-center bg-zinc-800 p-4 text-white lg:w-6/12">
         <span> How This Works:</span>{' '}
         <span>
           {' '}

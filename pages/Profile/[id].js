@@ -235,9 +235,6 @@ const Profile = ({ userData }) => {
   const ownProfile =
     userData.displayName === user.displayName ? 'hidden' : 'block'
 
-  console.log(user.displayName)
-  console.log(userData.raters.includes(user.displayName))
-
   const showRateOptions = userData.raters.includes(user.displayName)
     ? 'hidden'
     : 'block'
@@ -319,6 +316,14 @@ const Profile = ({ userData }) => {
             id="RightSide"
             className="flex max-h-screen min-w-full flex-col  rounded-xl"
           >
+            <div className=" flex flex-col items-center justify-center p-4 text-4xl">
+              {' '}
+              {showRatingFull}{' '}
+            </div>
+            <span className="mb-4 text-center text-3xl font-medium text-red-800">
+              {' '}
+              {ratingNumber} Star Challenger{' '}
+            </span>
             <div className=" overflow-auto rounded-xl bg-neutral-700 p-2 shadow-lg shadow-neutral-900">
               <h1 className="text-center text-2xl font-medium text-white">
                 Reviews
@@ -352,30 +357,41 @@ const Profile = ({ userData }) => {
                       <span className="mb-8 text-[20px]">
                         {comment.comment}
                       </span>
-                      <div className="flex items-center gap-4">
-                        <Image
-                          src={comment.profilePic}
-                          width={30}
-                          height={30}
-                          className="rounded-full"
-                          objectFit="cover"
-                        />
-
-                        <div className="flex flex-col">
-                          <div className="flex items-center gap-6">
-                            <span className="text-[12px]">
-                              By: {comment.by}
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-[8px]">{comment.date}</span>
-                            <LikeButtons
-                              id={comment.id}
-                              likes={comment.likes}
-                              dislikes={comment.dislikes}
-                              name={userData.displayName}
+                      <div className="flex w-full flex-col">
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex gap-1">
+                            <Image
+                              src={comment.profilePic}
+                              width={30}
+                              height={30}
+                              className="rounded-full"
+                              objectFit="cover"
                             />
+
+                            <div className="flex flex-col">
+                              <div className="flex items-center gap-6">
+                                <span className="text-[12px]">
+                                  By: {comment.by}
+                                </span>
+                              </div>
+                              <div className="flex justify-around">
+                                <span className="text-[8px]">
+                                  {comment.date}
+                                </span>
+                              </div>
+                            </div>
                           </div>
+                          <LikeButtons
+                            id={comment.id}
+                            likes={comment.likes}
+                            dislikes={comment.dislikes}
+                            name={userData.displayName}
+                          />
+                        </div>
+                        <div className="mt-4 flex justify-center text-[12px]">
+                          {comment.rating
+                            ? `Rated ${comment.rating} Stars`
+                            : 'Did not rate'}
                         </div>
                       </div>
                     </div>
@@ -383,7 +399,7 @@ const Profile = ({ userData }) => {
                 })}
               </div>
             </div>
-            <form className="flex flex-col rounded-xl  p-4 ">
+            <form className={`flex flex-col rounded-xl  p-4  ${ownProfile}`}>
               <textarea
                 className="rounded-xl p-4 text-sm"
                 onChange={(e) => {
@@ -393,8 +409,21 @@ const Profile = ({ userData }) => {
               >
                 {' '}
               </textarea>
+              <select
+                className={`mx-auto mt-4 w-3/12 ${showRateOptions} `}
+                onChange={(e) => setCommentRating(e.target.value)}
+              >
+                <option> Rating </option>
+                <option value={5}> 5 </option>
+                <option value={4}> 4 </option>
+                <option value={3}> 3 </option>
+                <option value={2}> 2 </option>
+                <option value={1}> 1 </option>
+              </select>
+              <span className="text-center text-white">{alreadyRated}</span>
+
               <button
-                onClick={handleComment}
+                onClick={(e) => handleComment(e, comment, commentRating)}
                 className="mx-auto mt-4  rounded bg-red-900 p-2 font-bold text-white hover:bg-red-700"
               >
                 Comment
@@ -555,7 +584,7 @@ const Profile = ({ userData }) => {
                 })}
               </div>
             </div>
-            <form className="flex flex-col rounded-xl  p-4 ">
+            <form className={`flex flex-col rounded-xl  p-4 ${ownProfile}`}>
               <textarea
                 className="rounded-xl p-8 text-sm"
                 onChange={(e) => {
