@@ -7,6 +7,8 @@ import { db } from '../firebase-config'
 import { useRouter } from 'next/router'
 import { updateProfile } from 'firebase/auth'
 import { check } from 'prettier'
+import { motion } from 'framer-motion'
+import SuccessToast from './SuccessToast'
 
 const SignUpComponent = () => {
   const { user } = AuthFunctions()
@@ -15,6 +17,7 @@ const SignUpComponent = () => {
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [showToast, setShowToast] = useState(true)
   const router = useRouter()
   /* ==========================Functions================================ */
   // this function creates the user in firebase, and creates a document with their email in the users collection in firebase.
@@ -48,6 +51,7 @@ const SignUpComponent = () => {
             rating: [5],
             raters: [],
           })
+
           router.push('/')
         } catch (err) {
           console.log(err.message)
@@ -96,8 +100,10 @@ const SignUpComponent = () => {
       console.log('no special characters')
     }
   }
+
   return (
     <section className="relative min-h-screen  py-20">
+      <SuccessToast isVisible={showToast} setShowToast={setShowToast} />
       <div className="container mx-auto  px-4">
         <div className="mb-12 w-full   lg:w-1/2">
           <div className=" lg:max-w-md">

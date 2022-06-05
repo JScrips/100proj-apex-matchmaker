@@ -1,5 +1,11 @@
+import SuccessToast from '../components/SuccessToast'
+
 const Lab = () => {
-  return <> </>
+  return (
+    <>
+      <SuccessToast />{' '}
+    </>
+  )
 }
 
 export default Lab
