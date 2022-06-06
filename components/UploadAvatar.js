@@ -1,12 +1,19 @@
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { storage } from '../firebase-config'
-import { ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage'
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  deleteObject,
+} from 'firebase/storage'
 import { doc, updateDoc, onSnapshot, getDoc } from 'firebase/firestore'
 import { AuthFunctions } from '../src/AuthContext'
 import { db } from '../firebase-config'
 import { updateProfile } from 'firebase/auth'
 import { auth } from '../firebase-config'
+import { useRouter } from 'next/router'
 
 const UploadAvatar = ({ userData }) => {
   const [file, setFile] = useState('')
@@ -14,6 +21,7 @@ const UploadAvatar = ({ userData }) => {
   const [avatar, setAvatar] = useState('')
   const { user } = AuthFunctions()
   const show = avatar ? avatar : '/apexLogo.png'
+  const router = useRouter()
 
   useEffect(async () => {
     const docRef = doc(db, 'users', userData.displayName)
@@ -32,18 +40,24 @@ const UploadAvatar = ({ userData }) => {
   const handleSubmit = () => {
     const imgRef = ref(storage, `avatars/${userData.displayName}`)
     const docRef = doc(db, `users/${userData.displayName}`)
-    uploadBytes(imgRef, file).then(() => {
-      getDownloadURL(imgRef).then((url) => {
-        updateDoc(docRef, {
-          photoURL: url,
-        })
-        updateProfile(auth.currentUser, {
-          photoURL: url,
+    try {
+      uploadBytes(imgRef, file).then(() => {
+        getDownloadURL(imgRef).then((url) => {
+          updateDoc(docRef, {
+            photoURL: url,
+          })
+          updateProfile(auth.currentUser, {
+            photoURL: url,
+          })
         })
       })
-    })
-    setFile('')
-    alert('Avatar updated!')
+
+      setFile('')
+      alert('Avatar updated!')
+      router.reload()
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (

@@ -9,6 +9,9 @@ import { updateProfile } from 'firebase/auth'
 import { check } from 'prettier'
 import { motion } from 'framer-motion'
 import SuccessToast from './SuccessToast'
+import ErrorNameToast from './ErrorNameToast'
+import ErrorPasswordToast from './ErrorPasswordToast'
+import ErrorSpecialToast from './ErrorSpecialToast'
 
 const SignUpComponent = () => {
   const { user } = AuthFunctions()
@@ -17,7 +20,10 @@ const SignUpComponent = () => {
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [showToast, setShowToast] = useState(true)
+  const [showToast, setShowToast] = useState(false)
+  const [showNameError, setShowNameError] = useState(false)
+  const [showPasswordError, setShowPasswordError] = useState(false)
+  const [showSpecialError, setShowSpecialError] = useState(false)
   const router = useRouter()
   /* ==========================Functions================================ */
   // this function creates the user in firebase, and creates a document with their email in the users collection in firebase.
@@ -28,7 +34,7 @@ const SignUpComponent = () => {
       console.log(docRef)
       const createdDisplayName = await getDoc(docRef)
       if (createdDisplayName.exists()) {
-        alert('Display Name already exists')
+        setShowNameError(true)
       } else {
         try {
           const createdUser = await createUser(email, password)
@@ -58,7 +64,9 @@ const SignUpComponent = () => {
         }
       }
     } else {
-      alert('Passwords do not match')
+      setShowPasswordError(true)
+      setPassword('')
+      setConfirmPassword('')
     }
   }
 
@@ -95,7 +103,8 @@ const SignUpComponent = () => {
       word.includes('\\') ||
       word.includes('`')
     ) {
-      alert('Please do not use special characters')
+      setShowSpecialError(true)
+      setDisplayName('')
     } else {
       console.log('no special characters')
     }
@@ -104,6 +113,19 @@ const SignUpComponent = () => {
   return (
     <section className="relative min-h-screen  py-20">
       <SuccessToast isVisible={showToast} setShowToast={setShowToast} />
+      <ErrorNameToast
+        isVisible={showNameError}
+        setShowNameError={setShowNameError}
+      />
+      <ErrorPasswordToast
+        isVisible={showPasswordError}
+        setShowPasswordError={setShowPasswordError}
+      />
+      <ErrorSpecialToast
+        isVisible={showSpecialError}
+        setShowSpecialError={setShowSpecialError}
+        setDisplayName={setDisplayName}
+      />
       <div className="container mx-auto  px-4">
         <div className="mb-12 w-full   lg:w-1/2">
           <div className=" lg:max-w-md">
@@ -133,6 +155,7 @@ const SignUpComponent = () => {
                   <input
                     className="relative mb-2 w-full rounded border py-4 pl-4 text-sm md:mb-0"
                     type="email"
+                    value={displayName}
                     placeholder="e.g ApexPredator"
                     onChange={(e) => setDisplayName(e.target.value)}
                     onBlur={(e) => checkAlpha(e.target.value)}
@@ -146,6 +169,7 @@ const SignUpComponent = () => {
                   <input
                     className="relative mb-2 w-full rounded border py-4 pl-4 text-sm md:mb-0"
                     type="email"
+                    value={email}
                     placeholder="e.g apex@royale.com"
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -158,6 +182,7 @@ const SignUpComponent = () => {
                   <input
                     className="relative mb-2 w-full rounded border py-4 pl-4 text-sm md:mb-0"
                     type="password"
+                    value={password}
                     placeholder="******"
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -171,6 +196,7 @@ const SignUpComponent = () => {
                   <input
                     className="relative mb-2 w-full rounded border py-4 pl-4 text-sm md:mb-0"
                     type="password"
+                    value={confirmPassword}
                     placeholder="******"
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required

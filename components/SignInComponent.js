@@ -13,11 +13,13 @@ import {
   getDoc,
 } from 'firebase/firestore'
 import { db } from '../firebase-config'
+import LoginErrorToast from './LoginErrorToast'
 
 const SignInComponent = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { user, signInUser } = AuthFunctions()
+  const [showLoginError, setShowLoginError] = useState(false)
   const router = useRouter()
 
   /* ==========================Functions================================ */
@@ -38,6 +40,7 @@ const SignInComponent = () => {
 
       router.push(`/Profile/${endPoint}`)
     } catch (err) {
+      setShowLoginError(true)
       console.log(err.message)
     }
   }
@@ -129,6 +132,10 @@ const SignInComponent = () => {
           layout="fill"
         />
       </div>
+      <LoginErrorToast
+        isVisible={showLoginError}
+        setShowLoginError={setShowLoginError}
+      />
     </section>
   )
 }

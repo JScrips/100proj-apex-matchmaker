@@ -80,19 +80,25 @@ const Search = () => {
       <div className="flex flex-col">
         <h1 className=" text-center text-white">Search Players</h1>
         <input
-          className="mx-auto w-full p-2 lg:w-6/12"
+          className="mx-auto w-full bg-zinc-800  p-2 text-white lg:w-6/12"
           placeholder="Dominator (case-sensitive)"
           onChange={(e) => setManualInput(e.target.value)}
         />
         <div className="text-center text-white">OR</div>
         <div className="flex flex-col gap-10 p-4 sm:hidden">
-          <select onChange={(e) => setStatus(e.target.value)}>
+          <select
+            className="bg-zinc-800 text-white"
+            onChange={(e) => setStatus(e.target.value)}
+          >
             <option value="">Online Status</option>
             <option value="Online">Online</option>
             <option value="Busy">Busy</option>
             <option value="Offline">Offline</option>
           </select>
-          <select onChange={(e) => setChamp(e.target.value)}>
+          <select
+            className="bg-zinc-800 text-white"
+            onChange={(e) => setChamp(e.target.value)}
+          >
             <option value="">Select Champion</option>
 
             <option value="Ash">Ash</option>
@@ -116,14 +122,20 @@ const Search = () => {
             <option value="Wattson">Wattson</option>
             <option value="Wraith">Wraith</option>
           </select>
-          <select onChange={(e) => setMode(e.target.value)}>
+          <select
+            className="bg-zinc-800 text-white"
+            onChange={(e) => setMode(e.target.value)}
+          >
             <option value="">Select Mode</option>
             <option value="Battle Royale">Battle Royale</option>
             <option value="Arena">Arena</option>
             <option value="Training">Training</option>
             <option value="Seasonal">Seasonal</option>
           </select>
-          <select onChange={(e) => setTier(e.target.value)}>
+          <select
+            className="bg-zinc-800 text-white"
+            onChange={(e) => setTier(e.target.value)}
+          >
             <option value="">Select Tier</option>
             <option value="Rookie">Rookie</option>
             <option value="Bronze">Bronze</option>
@@ -138,12 +150,18 @@ const Search = () => {
 
         {/*========================DESKTOP=======================================*/}
         <div className="hidden gap-10 p-4 md:flex md:justify-center">
-          <select onChange={(e) => setStatus(e.target.value)}>
+          <select
+            className="bg-zinc-800 text-white"
+            onChange={(e) => setStatus(e.target.value)}
+          >
             <option value="">Online Status</option>
             <option value="Online">Online</option>
             <option value="Offline">Offline</option>
           </select>
-          <select onChange={(e) => setChamp(e.target.value)}>
+          <select
+            className="bg-zinc-800 text-white"
+            onChange={(e) => setChamp(e.target.value)}
+          >
             <option value="">Select Champion</option>
 
             <option value="Ash">Ash</option>
@@ -167,14 +185,20 @@ const Search = () => {
             <option value="Wattson">Wattson</option>
             <option value="Wraith">Wraith</option>
           </select>
-          <select onChange={(e) => setMode(e.target.value)}>
+          <select
+            className="bg-zinc-800 text-white"
+            onChange={(e) => setMode(e.target.value)}
+          >
             <option value="">Select Mode</option>
             <option value="Battle Royale">Battle Royale</option>
             <option value="Arena">Arena</option>
             <option value="Training">Training</option>
             <option value="Seasonal">Seasonal</option>
           </select>
-          <select onChange={(e) => setTier(e.target.value)}>
+          <select
+            className="bg-zinc-800 text-white"
+            onChange={(e) => setTier(e.target.value)}
+          >
             <option value="">Select Tier</option>
             <option value="Rookie">Rookie</option>
             <option value="Bronze">Bronze</option>

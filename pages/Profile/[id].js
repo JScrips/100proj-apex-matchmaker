@@ -325,7 +325,7 @@ const Profile = ({ userData }) => {
               {' '}
               {showRatingFull}{' '}
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-center gap-2">
               <span className="mb-4 text-center text-3xl font-medium text-red-800">
                 {' '}
                 {ratingNumber} Star Challenger{' '}
