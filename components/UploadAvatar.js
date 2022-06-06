@@ -61,7 +61,7 @@ const UploadAvatar = ({ userData }) => {
   }
 
   return (
-    <div className=" flex flex-col gap-4 rounded-lg bg-zinc-800 text-center">
+    <div className=" flex w-10/12 flex-col gap-4 rounded-lg bg-zinc-800 text-center md:w-auto">
       <Image
         src={show}
         width={400}
