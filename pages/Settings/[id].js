@@ -26,9 +26,7 @@ const Settings = ({ userData }) => {
             </Link>
             <span className="text-2xl">'s Settings</span>
           </div>
-          <section className="flex flex-col items-center justify-between gap-20 border-b  border-zinc-700 pt-8 pb-8">
-            <UploadAvatar userData={userData} />
-          </section>
+
           <section className="flex flex-col items-center justify-between gap-20 border-b  border-zinc-700 pt-8 pb-8">
             <CurrentRank userData={userData} />
           </section>
