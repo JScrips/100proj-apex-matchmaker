@@ -15,7 +15,10 @@ const index = () => {
         <link rel="icon" href="/ApexLogo.ico" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@Codeasaurus_Rex" />
-        <meta name="twitter:image" content="https://ibb.co/YX9bYYz" />
+        <meta
+          name="twitter:image"
+          content="http://graphics8.nytimes.com/images/2012/02/19/us/19whitney-span/19whitney-span-articleLarge.jpg"
+        />
         <meta property="og:url" content="https://apexmaker.vercel.app" />
         <meta property="og:title" content="Apex MatchMaker" />
         <meta
