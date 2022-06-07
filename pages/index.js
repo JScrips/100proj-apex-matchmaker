@@ -12,14 +12,14 @@ const index = () => {
     <div>
       <Head>
         <title>Apex MatchMaker</title>
-        <link rel="icon" href="/twitterCard.png" />
+        <link rel="icon" href="/ApexLogo.ico" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Apex MatchMaker" />
         <meta
           property="og:description"
           content="Matchmake. Dominate. -- A hub for top contenders in Apex Legends to commune and create the ultimate Alpha Squad."
         />
-        <meta property="og:image" content="/ApexLogo.ico" />
+        <meta property="og:image" content="/twitterCard.png" />
         <meta property="og:url" content="https://apexmaker.vercel.app" />
 
         <meta name="twitter:card" content="summary_large_image" />
