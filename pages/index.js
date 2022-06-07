@@ -2,6 +2,7 @@ import LogoutButton from '../components/LogoutButton'
 import { AuthFunctions } from '../src/AuthContext'
 import Link from 'next/link'
 import Image from 'next/image'
+import Head from 'next/head'
 
 const index = () => {
   const { user } = AuthFunctions()
@@ -9,6 +10,29 @@ const index = () => {
   const welcome = user ? ` ${user.displayName}` : ` Guest`
   return (
     <div>
+      <Head>
+        <title>Apex MatchMaker</title>
+        <link rel="icon" href="/twitterCard.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Apex MatchMaker" />
+        <meta
+          property="og:description"
+          content="Matchmake. Dominate. -- A hub for top contenders in Apex Legends to commune and create the ultimate Alpha Squad."
+        />
+        <meta property="og:image" content="/ApexLogo.ico" />
+        <meta property="og:url" content="https://apexmaker.vercel.app" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="https://apexmaker.vercel.app" />
+        <meta name="twitter:creator" content="@Codeasaurus_Rex" />
+        <meta name="twitter:title" content="Apex MatchMaker" />
+
+        <meta
+          name="twitter:description"
+          content="Matchmake. Dominate. -- A hub for top contenders in Apex Legends to commune and create the ultimate Alpha Squad. "
+        />
+        <meta name="twitter:image" content="/twitterCard.png" />
+      </Head>
       <div className="hidden min-h-screen min-w-full flex-col justify-center md:flex">
         <div>
           <Image
