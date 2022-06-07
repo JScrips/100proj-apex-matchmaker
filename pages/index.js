@@ -15,17 +15,14 @@ const index = () => {
         <link rel="icon" href="/ApexLogo.ico" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@Codeasaurus_Rex" />
-        <meta
-          name="twitter:image"
-          content="http://graphics8.nytimes.com/images/2012/02/19/us/19whitney-span/19whitney-span-articleLarge.jpg"
-        />
+        <meta name="twitter:image" content="https://picbun.com/p/2xinOYJe" />
         <meta property="og:url" content="https://apexmaker.vercel.app" />
         <meta property="og:title" content="Apex MatchMaker" />
         <meta
           property="og:description"
           content="Matchmake. Dominate. -- A hub for top contenders in Apex Legends to commune and create the ultimate Alpha Squad."
         />
-        <meta property="og:image" content="https://ibb.co/YX9bYYz" />
+        <meta property="og:image" content="https://picbun.com/p/2xinOYJe" />
         <meta property="og:type" content="website" />
       </Head>
       <div className="hidden min-h-screen min-w-full flex-col justify-center md:flex">
