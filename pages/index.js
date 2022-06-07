@@ -15,6 +15,7 @@ const index = () => {
         <link rel="icon" href="/ApexLogo.ico" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@Codeasaurus_Rex" />
+        <meta name="twitter:image" content="https://ibb.co/YX9bYYz" />
         <meta property="og:url" content="https://apexmaker.vercel.app" />
         <meta property="og:title" content="Apex MatchMaker" />
         <meta
