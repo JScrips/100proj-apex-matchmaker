@@ -21,7 +21,7 @@ const index = () => {
           property="og:description"
           content="Matchmake. Dominate. -- A hub for top contenders in Apex Legends to commune and create the ultimate Alpha Squad."
         />
-        <meta property="og:image" content="/twitterCard.png" />
+        <meta property="og:image" content="https://ibb.co/YX9bYYz" />
         <meta property="og:type" content="website" />
       </Head>
       <div className="hidden min-h-screen min-w-full flex-col justify-center md:flex">
